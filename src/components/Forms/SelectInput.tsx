@@ -3,6 +3,7 @@ import {
   FormLabel,
   Select,
   SelectProps as ChakraSelectProps,
+  Text,
 } from '@chakra-ui/react';
 
 interface SelectInputProps extends ChakraSelectProps {
@@ -24,6 +25,7 @@ export function SelectInput({
         name={name}
         id={name}
         focusBorderColor="teal.500"
+        color="gray.400"
         bgColor="blue.900"
         variant="filled"
         _hover={{

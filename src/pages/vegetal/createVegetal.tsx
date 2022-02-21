@@ -18,10 +18,11 @@ import { SideBar } from '../../components/Sidebar';
 
 import { IoIosArrowDropleft } from 'react-icons/io';
 import Link from 'next/link';
+import { TextAreaInput } from '../../components/Forms/TextAreaInput';
 
-const graus = ['QS', 'CI', 'CDC', 'QM'];
+const graus = ['Aguado', 'Fraco', 'Bom', 'Forte'];
 
-export default function CreateUser() {
+export default function CreateVegetal() {
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -38,8 +39,8 @@ export default function CreateUser() {
           <Heading size="lg" fontWeight="normal">
             {isWideVersion ? (
               <HStack justify="space-between">
-                <Text>Criar usuário</Text>
-                <Link href="/users">
+                <Text>Novo registro</Text>
+                <Link href="/vegetal">
                   <Box as="button">
                     <IoIosArrowDropleft />
                     <Text fontSize="xs">Voltar</Text>
@@ -47,7 +48,7 @@ export default function CreateUser() {
                 </Link>
               </HStack>
             ) : (
-              <Text>Criar usuário</Text>
+              <Text>Novo registro</Text>
             )}
           </Heading>
 
@@ -55,32 +56,34 @@ export default function CreateUser() {
 
           <VStack>
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
-              <Input name="name" label="Nome completo" />
-              <Input name="email" type="email" label="E-mail" />
+              <Input name="cod" label="ID" />
+              <Input name="typeMariri" label="Tipo Mariri" />
+              <Input name="typeChacrona" label="Tipo Chacrona" />
             </SimpleGrid>
 
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
+              <Input name="qtd" type="number" label="Quantidade" />
+              <Input name="data" type="date" label="Data Preparo" />
               <SelectInput name="grau" label="Grau" optSelect={graus} />
-
-              <SwitchInput
-                name="admAllow"
-                label="Permissões de administrador ?"
-              />
             </SimpleGrid>
 
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
-              <Input name="password" type="password" label="Senha" />
-              <Input
-                name="password_confirmation"
-                type="password"
-                label="Confirmar senha"
-              />
+              <Input name="npreparo" label="Núcleo Preparo" />
+              <Input name="mpreparo" label="Mestre Preparo" />
+            </SimpleGrid>
+            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
+              <Input name="origemMariri" label="Origem Mariri" />
+              <Input name="origemChacrona" label="Origem Chacrona" />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
+              <TextAreaInput name="obs" label="Observação" w="48.5%" />
             </SimpleGrid>
           </VStack>
 
           <Flex mt="8" justify="flex-end">
             <HStack spacing="4">
-              <Link href="/users">
+              <Link href="/vegetal">
                 <Button as="a" colorScheme="red">
                   Cancelar
                 </Button>

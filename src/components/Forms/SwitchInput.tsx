@@ -1,6 +1,11 @@
-import { FormControl, FormLabel, Switch } from '@chakra-ui/react';
+import {
+  FormControl,
+  FormLabel,
+  Switch,
+  SwitchProps as ChakraSwitchProps,
+} from '@chakra-ui/react';
 
-interface SwitchInputProps {
+interface SwitchInputProps extends ChakraSwitchProps {
   name: string;
   label?: string;
 }
@@ -13,7 +18,7 @@ export function SwitchInput({ name, label, ...rest }: SwitchInputProps) {
           {label}
         </FormLabel>
       )}
-      <Switch id={name} />
+      <Switch id={name} {...rest} />
     </FormControl>
   );
 }

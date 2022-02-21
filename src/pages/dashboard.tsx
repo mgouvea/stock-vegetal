@@ -87,14 +87,7 @@ export default function Dashboard() {
     <Flex direction="column" h="100vh">
       <Header />
 
-      <Flex
-        w="100%"
-        my="6"
-        maxWidth={1480}
-        mx="auto"
-        px="6"
-        // border="1px solid red"
-      >
+      <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <SideBar />
         <SimpleGrid
           flex="1"
@@ -102,7 +95,7 @@ export default function Dashboard() {
           minChildWidth="320px"
           alignItems="flex-start"
         >
-          <Box p="8" bg="blue.800" borderRadius={8} pb="4">
+          <Box p={['6', '8']} bg="blue.800" borderRadius={8} pb="4">
             <Text fontSize="lg" mb="4">
               Quantidade em estoque:{' '}
               <Badge
@@ -123,7 +116,7 @@ export default function Dashboard() {
             />
           </Box>
 
-          <Box p="8" bg="blue.800" borderRadius={8} pb="4">
+          <Box p={['6', '8']} bg="blue.800" borderRadius={8} pb="4">
             <Text fontSize="lg" mb="4">
               Consumo
             </Text>
