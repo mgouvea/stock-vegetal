@@ -90,28 +90,28 @@ export default function Footer() {
           <Link
             href={'https://udv.org.br/'}
             isExternal
-            _hover={{ fontWeight: 'bold', color: 'orange.400' }}
+            _hover={{ fontWeight: 'bold', color: 'byellow.500' }}
           >
             UDV
           </Link>
           <Link
             href={'https://faixaadicional.udv.org.br/pt'}
             isExternal
-            _hover={{ fontWeight: 'bold', color: 'orange.400' }}
+            _hover={{ fontWeight: 'bold', color: 'byellow.500' }}
           >
             Faixa Adicional
           </Link>
           <Link
             href={'https://nossaloja.udv.com.br/'}
             isExternal
-            _hover={{ fontWeight: 'bold', color: 'orange.400' }}
+            _hover={{ fontWeight: 'bold', color: 'byellow.500' }}
           >
             Nossa Loja
           </Link>
           <Link
             href={'http://mercadoinca.com.br/'}
             isExternal
-            _hover={{ fontWeight: 'bold', color: 'orange.400' }}
+            _hover={{ fontWeight: 'bold', color: 'byellow.500' }}
           >
             Mercado Inca
           </Link>

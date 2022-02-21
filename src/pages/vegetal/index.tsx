@@ -58,13 +58,19 @@ export default function EntradaVegetal() {
             <Table colorScheme="whiteAlpha">
               <Thead>
                 <Tr>
-                  <Th width="6">ID</Th>
-                  <Th width="10">VEGETAL</Th>
-                  <Th>PREPARO</Th>
-                  <Th>QTD</Th>
-                  <Th width="8">GRAU</Th>
-                  <Th>OBS</Th>
-                  <Th>DATA</Th>
+                  <Th color="gray.500" width="6">
+                    ID
+                  </Th>
+                  <Th color="gray.500" width="10">
+                    VEGETAL
+                  </Th>
+                  <Th color="gray.500">PREPARO</Th>
+                  <Th color="gray.500">QTD</Th>
+                  <Th color="gray.500" width="8">
+                    GRAU
+                  </Th>
+                  <Th color="gray.500">OBS</Th>
+                  <Th color="gray.500">DATA</Th>
                 </Tr>
               </Thead>
               <Tbody>

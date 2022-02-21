@@ -57,8 +57,8 @@ export default function UserList() {
                 <Th px={['4', '4', '6']} color="gray.300" width="8">
                   <Checkbox colorScheme="teal" />
                 </Th>
-                <Th>Usuário</Th>
-                {isWideVersion && <Th>Grau</Th>}
+                <Th color="gray.500">Usuário</Th>
+                {isWideVersion && <Th color="gray.500">Grau</Th>}
                 {isWideVersion && <Th w="8"></Th>}
               </Tr>
             </Thead>

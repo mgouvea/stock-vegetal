@@ -60,13 +60,17 @@ export default function Consumo() {
             <Table colorScheme="whiteAlpha">
               <Thead>
                 <Tr>
-                  <Th width="6">ID</Th>
-                  <Th width="10">TIPO SESSÃO</Th>
-                  <Th>DIRIGENTE</Th>
-                  <Th>CONSUMO</Th>
-                  <Th>ASSISTENTE - AUXILIAR(ES)</Th>
-                  <Th>INFORMAÇÕES SESSÃO</Th>
-                  <Th>PESSOAS</Th>
+                  <Th color="gray.500" width="6">
+                    ID
+                  </Th>
+                  <Th color="gray.500" width="10">
+                    TIPO SESSÃO
+                  </Th>
+                  <Th color="gray.500">DIRIGENTE</Th>
+                  <Th color="gray.500">CONSUMO</Th>
+                  <Th color="gray.500">ASSISTENTE - AUXILIAR(ES)</Th>
+                  <Th color="gray.500">INFORMAÇÕES SESSÃO</Th>
+                  <Th color="gray.500">PESSOAS</Th>
                 </Tr>
               </Thead>
               <Tbody>

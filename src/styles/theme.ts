@@ -7,7 +7,7 @@ export const theme = extendTheme({
   },
   colors: {
     byellow: {
-      500: '#E3CD7C',
+      500: '#F7B800',
       600: '#B69E43',
       700: '#8D761E',
       800: '#645105',

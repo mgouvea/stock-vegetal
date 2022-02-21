@@ -14,7 +14,7 @@ export function Logo() {
         mr="2"
         ml={['3', '0']}
         mb="1"
-        color="orange.300"
+        color="byellow.500"
         as={RiStarFill}
       />
       {isWideVersion && (
@@ -25,7 +25,7 @@ export function Logo() {
           w="64"
         >
           Sala do Vegetal
-          <Text as="span" ml="1" color="orange.300">
+          <Text as="span" ml="1" color="byellow.500">
             .
           </Text>
         </Text>
