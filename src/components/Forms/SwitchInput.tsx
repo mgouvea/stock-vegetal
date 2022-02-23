@@ -1,8 +1,10 @@
+import { forwardRef, ForwardRefRenderFunction } from 'react';
 import {
   FormControl,
   FormLabel,
   Switch,
   SwitchProps as ChakraSwitchProps,
+  // useBoolean,
 } from '@chakra-ui/react';
 
 interface SwitchInputProps extends ChakraSwitchProps {

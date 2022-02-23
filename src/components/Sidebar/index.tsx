@@ -21,11 +21,11 @@ export function SideBar() {
 
   if (isDrawerSidebar) {
     return (
-      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+      <Drawer isOpen={isOpen} placement="bottom" onClose={onClose}>
         <DrawerOverlay>
           <DrawerContent bg="blue.800" p="4">
             <DrawerCloseButton mt="6" />
-            <DrawerHeader>Navegação</DrawerHeader>
+            <DrawerHeader>Sala do Vegetal</DrawerHeader>
             <DrawerBody>
               <SideBarNav />
             </DrawerBody>

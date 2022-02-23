@@ -22,7 +22,48 @@ import { TextAreaInput } from '../../components/Forms/TextAreaInput';
 
 const graus = ['Aguado', 'Fraco', 'Bom', 'Forte'];
 
+import * as yup from 'yup';
+
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+type CreateVegetalFormData = {
+  cod: number;
+  typeMariri: string;
+  typeChacrona: string;
+  qtd: string;
+  data: string;
+  grau: string;
+  npreparo: string;
+  mpreparo: string;
+  origemMariri: string;
+  origemChacrona: string;
+  obs: string;
+};
+
+const createVegetalFormSchema = yup.object().shape({
+  cod: yup.string().required('ID obrigatório'),
+  typeMariri: yup.string().required('Tipo Mariri obrigatório'),
+  qtd: yup.string().required('Quantidade obrigatória'),
+  data: yup.string().required('Data obrigatória'),
+  grau: yup.string().required('Grau obrigatório'),
+});
+
 export default function CreateVegetal() {
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(createVegetalFormSchema),
+  });
+
+  const { errors } = formState;
+
+  const handleCreateVegetal: SubmitHandler<CreateVegetalFormData> = async (
+    values
+  ) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    console.log(values);
+  };
+
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -35,7 +76,14 @@ export default function CreateVegetal() {
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <SideBar />
 
-        <Box flex="1" borderRadius={8} bg="blue.800" p={['6', '8']}>
+        <Box
+          as="form"
+          flex="1"
+          borderRadius={8}
+          bg="blue.800"
+          p={['6', '8']}
+          onSubmit={handleSubmit(handleCreateVegetal)}
+        >
           <Heading size="lg" fontWeight="normal">
             {isWideVersion ? (
               <HStack justify="space-between">
@@ -56,28 +104,83 @@ export default function CreateVegetal() {
 
           <VStack>
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
-              <Input name="cod" label="ID" />
-              <Input name="typeMariri" label="Tipo Mariri" />
-              <Input name="typeChacrona" label="Tipo Chacrona" />
+              <Input
+                name="cod"
+                type="number"
+                label="ID"
+                {...register('cod')}
+                error={errors.cod}
+              />
+              <Input
+                name="typeMariri"
+                label="Tipo Mariri"
+                {...register('typeMariri')}
+                error={errors.typeMariri}
+              />
+              <Input
+                name="typeChacrona"
+                label="Tipo Chacrona"
+                {...register('typeChacrona')}
+                error={errors.typeChacrona}
+              />
             </SimpleGrid>
 
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
-              <Input name="qtd" type="number" label="Quantidade" />
-              <Input name="data" type="date" label="Data Preparo" />
-              <SelectInput name="grau" label="Grau" optSelect={graus} />
+              <Input
+                name="qtd"
+                type="number"
+                label="Quantidade Preparada"
+                {...register('qtd')}
+                error={errors.qtd}
+              />
+              <Input
+                name="data"
+                type="date"
+                label="Data Preparo"
+                {...register('data')}
+                error={errors.data}
+              />
+              <SelectInput
+                name="grau"
+                label="Grau"
+                optSelect={graus}
+                {...register('grau')}
+                error={errors.grau}
+              />
             </SimpleGrid>
 
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
-              <Input name="npreparo" label="Núcleo Preparo" />
-              <Input name="mpreparo" label="Mestre Preparo" />
+              <Input
+                name="npreparo"
+                label="Núcleo Preparo"
+                {...register('npreparo')}
+              />
+              <Input
+                name="mpreparo"
+                label="Mestre Preparo"
+                {...register('mpreparo')}
+              />
             </SimpleGrid>
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
-              <Input name="origemMariri" label="Origem Mariri" />
-              <Input name="origemChacrona" label="Origem Chacrona" />
+              <Input
+                name="origemMariri"
+                label="Origem Mariri"
+                {...register('origemMariri')}
+              />
+              <Input
+                name="origemChacrona"
+                label="Origem Chacrona"
+                {...register('origemChacrona')}
+              />
             </SimpleGrid>
 
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
-              <TextAreaInput name="obs" label="Observação" w="48.5%" />
+              <TextAreaInput
+                name="obs"
+                label="Observação"
+                w="48.5%"
+                {...register('obs')}
+              />
             </SimpleGrid>
           </VStack>
 
@@ -88,7 +191,13 @@ export default function CreateVegetal() {
                   Cancelar
                 </Button>
               </Link>
-              <Button colorScheme="green">Salvar</Button>
+              <Button
+                type="submit"
+                isLoading={formState.isSubmitting}
+                colorScheme="green"
+              >
+                Salvar
+              </Button>
             </HStack>
           </Flex>
         </Box>
