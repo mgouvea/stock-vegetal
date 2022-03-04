@@ -18,6 +18,8 @@ import { SideBar } from '../../components/Sidebar';
 
 import { IoIosArrowDropleft } from 'react-icons/io';
 import Link from 'next/link';
+import { firebase } from '../../services/firebase';
+import { useRouter } from 'next/router';
 
 const tipoSessao = [
   'Extra',
@@ -38,24 +40,24 @@ import { SwitchInput } from '../../components/Forms/SwitchInput';
 
 type CreateConsumoFormData = {
   cod: number;
-  typeSessao: string;
+  tipoSessao: string;
   dirigente: string;
-  qtd: number;
-  data: string;
+  consumo: number;
+  dataSessao: string;
   assistente: string;
-  auxiliar: string;
-  leitura: string;
-  explanacao: string;
-  qtd_pessoas: number;
-  repeticoes: number;
+  auxiliar?: string;
+  leitura?: string;
+  explanacao?: string;
+  qtdPessoas?: number;
+  repeticoes?: number;
 };
 
 const createConsumoFormSchema = yup.object().shape({
   cod: yup.string().required('ID obrigatório'),
-  typeSessao: yup.string().required('Tipo sessão obrigatório'),
+  tipoSessao: yup.string().required('Tipo sessão obrigatório'),
   dirigente: yup.string().required('Dirigente obrigatório'),
   consumo: yup.string().required('Quantidade obrigatória'),
-  data: yup.string().required('Data obrigatória'),
+  dataSessao: yup.string().required('Data obrigatória'),
   assistente: yup.string().required('Assistente obrigatório'),
   auxiliar: yup.string().required('Assistente obrigatório'),
   // leitura: yup.string().required('Assistente obrigatório'),
@@ -64,6 +66,9 @@ const createConsumoFormSchema = yup.object().shape({
 
 export default function CreateConsumo() {
   const [flag, setFlag] = useBoolean();
+
+  const db = firebase.firestore();
+  const routes = useRouter();
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createConsumoFormSchema),
@@ -77,6 +82,60 @@ export default function CreateConsumo() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     console.log(values);
+
+    const {
+      cod,
+      tipoSessao,
+      dirigente,
+      consumo,
+      dataSessao,
+      assistente,
+      auxiliar,
+      leitura,
+      explanacao,
+      qtdPessoas,
+      repeticoes,
+    } = values;
+
+    try {
+      flag
+        ? db
+            .collection('consumo')
+            .add({
+              cod,
+              tipoSessao,
+              dirigente,
+              consumo,
+              dataSessao,
+              assistente,
+              auxiliar,
+              leitura,
+              explanacao,
+              qtdPessoas,
+              repeticoes,
+            })
+            .then(() => {
+              routes.push('/consumo');
+            })
+        : db
+            .collection('consumo')
+            .add({
+              cod,
+              tipoSessao,
+              dirigente,
+              consumo,
+              dataSessao,
+              assistente,
+              auxiliar,
+              qtdPessoas,
+              repeticoes,
+            })
+            .then(() => {
+              routes.push('/consumo');
+            });
+    } catch (err) {
+      console.log('error', err.message);
+    }
   };
 
   const isWideVersion = useBreakpointValue({
@@ -127,11 +186,11 @@ export default function CreateConsumo() {
                 error={errors.cod}
               />
               <SelectInput
-                name="typeSessao"
+                name="tipoSessao"
                 label="Tipo Sessão"
                 optSelect={tipoSessao}
-                {...register('typeSessao')}
-                error={errors.typeSessao}
+                {...register('tipoSessao')}
+                error={errors.tipoSessao}
               />
               <Input
                 name="dirigente"
@@ -152,11 +211,11 @@ export default function CreateConsumo() {
                 error={errors.consumo}
               />
               <Input
-                name="data"
+                name="dataSessao"
                 type="date"
                 label="Data Sessão"
-                {...register('data')}
-                error={errors.data}
+                {...register('dataSessao')}
+                error={errors.dataSessao}
               />
             </SimpleGrid>
 
@@ -177,11 +236,11 @@ export default function CreateConsumo() {
 
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
-                name="pessoas"
+                name="qtdPessoas"
                 type="number"
                 label="Quantidade de pessoas"
                 min={0}
-                {...register('pessoas')}
+                {...register('qtdPessoas')}
               />
               <Input
                 name="repeticoes"

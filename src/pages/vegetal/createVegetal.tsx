@@ -27,41 +27,84 @@ import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { firebase } from '../../services/firebase';
+import { useRouter } from 'next/router';
+
 type CreateVegetalFormData = {
   cod: number;
-  typeMariri: string;
-  typeChacrona: string;
-  qtd: string;
+  tipoMariri: string;
+  tipoChacrona?: string;
+  qtd: number;
+  qtdAtual: number;
   data: string;
-  grau: string;
+  grau?: string;
   npreparo: string;
   mpreparo: string;
-  origemMariri: string;
-  origemChacrona: string;
-  obs: string;
+  origemMariri?: string;
+  origemChacrona?: string;
+  obs?: string;
 };
 
 const createVegetalFormSchema = yup.object().shape({
   cod: yup.string().required('ID obrigatório'),
-  typeMariri: yup.string().required('Tipo Mariri obrigatório'),
+  tipoMariri: yup.string().required('Tipo Mariri obrigatório'),
   qtd: yup.string().required('Quantidade obrigatória'),
   data: yup.string().required('Data obrigatória'),
   grau: yup.string().required('Grau obrigatório'),
 });
 
 export default function CreateVegetal() {
+  const db = firebase.firestore();
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createVegetalFormSchema),
   });
 
   const { errors } = formState;
+  const routes = useRouter();
 
   const handleCreateVegetal: SubmitHandler<CreateVegetalFormData> = async (
     values
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     console.log(values);
+    const {
+      cod,
+      tipoMariri,
+      tipoChacrona,
+      qtd,
+      data,
+      grau,
+      npreparo,
+      mpreparo,
+      origemMariri,
+      origemChacrona,
+      obs,
+    } = values;
+    const qtdAtual = qtd;
+
+    try {
+      db.collection('entrada')
+        .add({
+          cod,
+          tipoMariri,
+          tipoChacrona,
+          qtd,
+          qtdAtual,
+          data,
+          grau,
+          npreparo,
+          mpreparo,
+          origemMariri,
+          origemChacrona,
+          obs,
+        })
+        .then(() => {
+          routes.push('/vegetal');
+        });
+    } catch (err) {
+      console.log('error', err.message);
+    }
   };
 
   const isWideVersion = useBreakpointValue({
@@ -112,16 +155,16 @@ export default function CreateVegetal() {
                 error={errors.cod}
               />
               <Input
-                name="typeMariri"
+                name="tipoMariri"
                 label="Tipo Mariri"
-                {...register('typeMariri')}
-                error={errors.typeMariri}
+                {...register('tipoMariri')}
+                error={errors.tipoMariri}
               />
               <Input
-                name="typeChacrona"
+                name="tipoChacrona"
                 label="Tipo Chacrona"
-                {...register('typeChacrona')}
-                error={errors.typeChacrona}
+                {...register('tipoChacrona')}
+                error={errors.tipoChacrona}
               />
             </SimpleGrid>
 

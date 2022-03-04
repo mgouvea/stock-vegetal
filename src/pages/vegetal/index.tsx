@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Spinner,
   Table,
   Tbody,
   Td,
@@ -12,20 +13,56 @@ import {
   Th,
   Thead,
   Tr,
+  IconButton,
   useBreakpointValue,
+  Stack,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { RiAddLine } from 'react-icons/ri';
+import { useQuery } from 'react-query';
 import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
 import { SideBar } from '../../components/Sidebar';
+import { SkeletonTables } from '../../components/SkeletonTables';
+import { TableVegetal } from '../../components/Tables/TableVegetal';
 import { VegetalMobileCard } from '../../components/VegetalMobileCard';
 
+import { RiRefreshLine } from 'react-icons/ri';
+import { api } from '../../services/api';
+import { useVegetal } from '../../services/hooks/useVegetal';
+import { useEffect, useState } from 'react';
+
+import { firebase, auth } from '../../services/firebase';
+
 export default function EntradaVegetal() {
+  const { data, isLoading, isFetching, error, refetch } = useVegetal();
+  const [allVegetal, setAllVegetal] = useState([]);
+
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
+
+  let listaVegetal = [];
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('entrada')
+      .get()
+      .then((res) => {
+        res.docs.forEach((doc) => {
+          listaVegetal.push({
+            ...listaVegetal,
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+      });
+
+    console.log(listaVegetal);
+    setAllVegetal(listaVegetal);
+  }, []);
 
   return (
     <Box>
@@ -38,117 +75,53 @@ export default function EntradaVegetal() {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size={isWideVersion ? 'lg' : 'md'} fontWeight="normal">
               Entrada de Vegetal
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
             </Heading>
-            <Link href="/vegetal/createVegetal" passHref>
-              <Button
-                as="a"
+            <Stack direction="row">
+              <IconButton
+                onClick={() => refetch()}
+                colorScheme="orange"
+                aria-label="refresh"
                 size="sm"
-                fontSize="sm"
-                colorScheme="teal"
-                leftIcon={
-                  <Icon as={RiAddLine} fontSize={isWideVersion ? '20' : '15'} />
-                }
-              >
-                {isWideVersion ? 'Novo Registro' : 'Novo'}
-              </Button>
-            </Link>
+                icon={<RiRefreshLine color="#fff" />}
+              />
+              <Link href="/vegetal/createVegetal" passHref>
+                <Button
+                  as="a"
+                  size="sm"
+                  fontSize="sm"
+                  colorScheme="teal"
+                  leftIcon={
+                    <Icon
+                      as={RiAddLine}
+                      fontSize={isWideVersion ? '20' : '15'}
+                    />
+                  }
+                >
+                  {isWideVersion ? 'Novo Registro' : 'Novo'}
+                </Button>
+              </Link>
+            </Stack>
           </Flex>
 
           {isWideVersion ? (
-            <Table colorScheme="whiteAlpha">
-              <Thead>
-                <Tr>
-                  <Th color="gray.500" width="6">
-                    ID
-                  </Th>
-                  <Th color="gray.500" width="10">
-                    VEGETAL
-                  </Th>
-                  <Th color="gray.500">PREPARO</Th>
-                  <Th color="gray.500">QTD</Th>
-                  <Th color="gray.500" width="8">
-                    GRAU
-                  </Th>
-                  <Th color="gray.500">OBS</Th>
-                  <Th color="gray.500">DATA</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>93</Td>
-                  <Td>Caupuri</Td>
-                  <Td>
-                    <Box>
-                      <Text fontWeight="bold">M. José Araújo</Text>
-                      <Text fontSize="sm" color="gray.300">
-                        Rei Hoasqueiro
-                      </Text>
-                    </Box>
-                  </Td>
-                  <Td>
-                    <Badge colorScheme={'green'} variant="solid" fontSize="md">
-                      96 L
-                    </Badge>
-                  </Td>
-                  <Td>Bom</Td>
-                  <Td>Beber mais</Td>
-                  <Td>10/10/2021</Td>
-                </Tr>
-
-                <Tr>
-                  <Td>94</Td>
-                  <Td>Tucunacá</Td>
-                  <Td>
-                    <Box>
-                      <Text fontWeight="bold">M. Paulo Afonso</Text>
-                      <Text fontSize="sm" color="gray.300">
-                        Rei Hoasqueiro
-                      </Text>
-                    </Box>
-                  </Td>
-                  <Td>
-                    <Badge colorScheme={'green'} variant="solid" fontSize="md">
-                      100 L
-                    </Badge>
-                  </Td>
-                  <Td>Forte</Td>
-                  <Td>Pegando no físico</Td>
-                  <Td>23/11/2021</Td>
-                </Tr>
-              </Tbody>
-            </Table>
+            isLoading ? (
+              <SkeletonTables />
+            ) : error ? (
+              <Flex justify="center">
+                <Text>Falha ao exibir dados </Text>
+              </Flex>
+            ) : (
+              <TableVegetal data={allVegetal} />
+            )
           ) : (
             <Box>
-              <VegetalMobileCard
-                cod={93}
-                vegetal="Caupuri"
-                nucleo="Rei Hoasqueiro"
-                mestre="José Araújo"
-                qtd={96}
-                grau="Bom"
-                data="10/10/2021"
-              />
-              <VegetalMobileCard
-                cod={94}
-                vegetal="Tucunacá"
-                nucleo="Rei Hoasqueiro"
-                mestre="Paulo Afonso"
-                qtd={100}
-                grau="Forte"
-                data="23/11/2021"
-              />
-              <VegetalMobileCard
-                cod={95}
-                vegetal="Tucunacá"
-                nucleo="Rei Hoasqueiro"
-                mestre="Paulo Afonso"
-                qtd={20}
-                grau="Forte"
-                data="23/11/2021"
-              />
+              <VegetalMobileCard data={allVegetal} />
             </Box>
           )}
-          <Pagination />
+          {/* <Pagination /> */}
         </Box>
       </Flex>
     </Box>

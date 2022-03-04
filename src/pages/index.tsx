@@ -5,8 +5,10 @@ import {
   Text,
   Icon,
   useBreakpointValue,
+  IconButton,
 } from '@chakra-ui/react';
 import { RiStarFill } from 'react-icons/ri';
+import { FcGoogle } from 'react-icons/fc';
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,6 +16,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from '../components/Forms/Input';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Footer from '../components/Footer';
+import useAuth from '../services/hooks/useAuth';
+
+import { useRouter } from 'next/dist/client/router';
+import { firebase, auth } from '../services/firebase';
+import { useEffect } from 'react';
 
 type SignInFormData = {
   email: string;
@@ -26,6 +33,20 @@ const signInFormSchema = yup.object().shape({
 });
 
 export default function Home() {
+  const { user, signIn } = useAuth();
+  const router = useRouter();
+
+  const sigInGoogle = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const result = await auth.signInWithPopup(provider);
+    router.push('/dashboard');
+    console.log('user', result);
+
+    return result;
+  };
+
+  console.log('1teste', user);
+
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema),
   });
@@ -33,9 +54,10 @@ export default function Home() {
   const { errors } = formState;
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 750));
 
     console.log(values);
+    await signIn(values.email, values.password);
   };
 
   const isWideVersion = useBreakpointValue({
@@ -103,6 +125,16 @@ export default function Home() {
           >
             Entrar
           </Button>
+          <IconButton
+            aria-label="Entrar com google"
+            // colorScheme="whiteAlpha"
+            mt="4"
+            icon={<FcGoogle fontSize="20" />}
+            onClick={sigInGoogle}
+          />
+          <Text color="gray.400" fontSize="sm" textAlign="center" mt="1">
+            Entrar com google
+          </Text>
         </Flex>
       </Flex>
       <Footer />

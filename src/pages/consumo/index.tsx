@@ -6,6 +6,8 @@ import {
   Heading,
   HStack,
   Icon,
+  IconButton,
+  Spinner,
   Stack,
   Table,
   Tbody,
@@ -22,8 +24,41 @@ import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
 import { SideBar } from '../../components/Sidebar';
 import { ConsumoMobileCard } from '../../components/ConsumoMobileCard';
+import { useQuery } from 'react-query';
+import { TableConsumo } from '../../components/Tables/TableConsumo';
+import { SkeletonTables } from '../../components/SkeletonTables';
+import { RiRefreshLine } from 'react-icons/ri';
+import { api } from '../../services/api';
+import { useConsumo } from '../../services/hooks/useConsumo';
+import { useEffect, useState } from 'react';
+
+import { firebase, auth } from '../../services/firebase';
 
 export default function Consumo() {
+  const { data, isLoading, isFetching, error, refetch } = useConsumo();
+  const [allConsumo, setAllConsumo] = useState([]);
+
+  let listaConsumo = [];
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection('consumo')
+      .get()
+      .then((res) => {
+        res.docs.forEach((doc) => {
+          listaConsumo.push({
+            ...listaConsumo,
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+      });
+
+    console.log(listaConsumo);
+    setAllConsumo(listaConsumo);
+  }, []);
+
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -40,180 +75,54 @@ export default function Consumo() {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size={isWideVersion ? 'lg' : 'md'} fontWeight="normal">
               Consumo nas Sessões
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
             </Heading>
-            <Link href="/consumo/createConsumo" passHref>
-              <Button
-                as="a"
+            <Stack direction="row">
+              <IconButton
+                onClick={() => refetch()}
+                colorScheme="orange"
+                aria-label="refresh"
                 size="sm"
-                fontSize="sm"
-                colorScheme="teal"
-                leftIcon={
-                  <Icon as={RiAddLine} fontSize={isWideVersion ? '20' : '15'} />
-                }
-              >
-                {isWideVersion ? 'Novo Consumo' : 'Novo'}
-              </Button>
-            </Link>
+                icon={<RiRefreshLine color="#fff" />}
+              />
+              <Link href="/consumo/createConsumo" passHref>
+                <Button
+                  as="a"
+                  size="sm"
+                  fontSize="sm"
+                  colorScheme="teal"
+                  leftIcon={
+                    <Icon
+                      as={RiAddLine}
+                      fontSize={isWideVersion ? '20' : '15'}
+                    />
+                  }
+                >
+                  {isWideVersion ? 'Novo Consumo' : 'Novo'}
+                </Button>
+              </Link>
+            </Stack>
           </Flex>
 
           {isWideVersion ? (
-            <Table colorScheme="whiteAlpha">
-              <Thead>
-                <Tr>
-                  <Th color="gray.500" width="6">
-                    ID
-                  </Th>
-                  <Th color="gray.500" width="10">
-                    TIPO SESSÃO
-                  </Th>
-                  <Th color="gray.500">DIRIGENTE</Th>
-                  <Th color="gray.500">CONSUMO</Th>
-                  <Th color="gray.500">ASSISTENTE - AUXILIAR(ES)</Th>
-                  <Th color="gray.500">INFORMAÇÕES SESSÃO</Th>
-                  <Th color="gray.500">PESSOAS</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>94</Td>
-                  <Td>
-                    <Box>
-                      <Text fontWeight="bold">Escala</Text>
-                      <Text fontSize="sm" color="gray.300">
-                        19/02/2022
-                      </Text>
-                    </Box>
-                  </Td>
-                  <Td>M. Wladmir</Td>
-                  <Td>
-                    <Badge colorScheme={'green'} variant="solid" fontSize="md">
-                      7.5 L
-                    </Badge>
-                  </Td>
-                  <Td>
-                    <Box>
-                      <Text fontWeight="bold">M. Eduardo</Text>
-                      <Text fontSize="sm" color="gray.300">
-                        C. João F - Felipe - Daniel
-                      </Text>
-                    </Box>
-                  </Td>
-                  <Td>
-                    <Box>
-                      <HStack spacing="2">
-                        <Text fontWeight="bold">Leitura:</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          Jhonatan
-                        </Text>
-                      </HStack>
-                      <HStack spacing="2">
-                        <Text fontWeight="bold">Explanação:</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          C. Jeane
-                        </Text>
-                      </HStack>
-                    </Box>
-                  </Td>
-                  <Td>
-                    <Box>
-                      <HStack spacing="2">
-                        <Text fontWeight="bold">Pessoas:</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          86
-                        </Text>
-                      </HStack>
-                      <HStack spacing="2">
-                        <Text fontWeight="bold">Repetições:</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          0
-                        </Text>
-                      </HStack>
-                    </Box>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>94</Td>
-                  <Td>
-                    <Box>
-                      <Text fontWeight="bold">Escala Anual</Text>
-                      <Text fontSize="sm" color="gray.300">
-                        10/02/2022
-                      </Text>
-                    </Box>
-                  </Td>
-                  <Td>M. Marlo</Td>
-                  <Td>
-                    <Badge colorScheme={'green'} variant="solid" fontSize="md">
-                      12 L
-                    </Badge>
-                  </Td>
-                  <Td>
-                    <Box>
-                      <Text fontWeight="bold">M. Eduardo</Text>
-                      <Text fontSize="sm" color="gray.300">
-                        C. João F - Felipe - Daniel
-                      </Text>
-                    </Box>
-                  </Td>
-                  <Td>
-                    <Box>
-                      <HStack spacing="2">
-                        <Text fontWeight="bold">Leitura:</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          Alguém
-                        </Text>
-                      </HStack>
-                      <HStack spacing="2">
-                        <Text fontWeight="bold">Explanação:</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          M. Adriano
-                        </Text>
-                      </HStack>
-                    </Box>
-                  </Td>
-                  <Td>
-                    <Box>
-                      <HStack spacing="2">
-                        <Text fontWeight="bold">Pessoas:</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          93
-                        </Text>
-                      </HStack>
-                      <HStack spacing="2">
-                        <Text fontWeight="bold">Repetições:</Text>
-                        <Text fontSize="sm" color="gray.300">
-                          0
-                        </Text>
-                      </HStack>
-                    </Box>
-                  </Td>
-                </Tr>
-              </Tbody>
-            </Table>
+            isLoading ? (
+              <SkeletonTables />
+            ) : error ? (
+              <Flex justify="center">
+                <Text>Falha ao exibir dados </Text>
+              </Flex>
+            ) : (
+              <TableConsumo data={allConsumo} />
+            )
           ) : (
             <Box>
-              <ConsumoMobileCard
-                cod={94}
-                tipoSessao="Escala"
-                data="19/02/2022"
-                dirigente="M. Wladmir"
-                consumo={7.5}
-                assistente="M. Eduardo"
-                pessoas={86}
-              />
-              <ConsumoMobileCard
-                cod={94}
-                tipoSessao="Escala anual"
-                data="10/02/2022"
-                dirigente="M. Marlo"
-                consumo={12}
-                assistente="M. Eduardo"
-                pessoas={93}
-              />
+              <ConsumoMobileCard data={allConsumo} />
             </Box>
           )}
 
-          <Pagination />
+          {/* <Pagination /> */}
         </Box>
       </Flex>
     </Box>
