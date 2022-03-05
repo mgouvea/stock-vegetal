@@ -21,7 +21,7 @@ export async function getConsumo(): Promise<Vegetal[]> {
   // console.log(data);
 
   // formatar dados e carregar só uma vez
-  const consumo = data?.consumos?.map((cons) => {
+  const consumo = data?.map((cons) => {
     return {
       id: cons.id,
       cod: cons.cod,
@@ -31,10 +31,10 @@ export async function getConsumo(): Promise<Vegetal[]> {
       dataSessao: cons.dataSessao,
       assistente: cons.assistente,
       auxiliar: cons.auxiliar,
+      qtdPessoas: cons.pessoas,
+      repeticoes: cons.repeticoes,
       leitura: cons.leitura,
       explanacao: cons.explanacao,
-      pessoas: cons.pessoas,
-      repeticoes: cons.repeticoes,
     };
   });
 

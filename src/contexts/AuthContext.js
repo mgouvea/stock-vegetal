@@ -1,7 +1,5 @@
 import { createContext, useState } from 'react';
 import { useRouter } from 'next/router';
-// import firebase from '../services/firebase';
-import { firebase, auth } from '../services/firebase';
 
 const AuthContext = createContext();
 
@@ -34,19 +32,6 @@ export function AuthProvider({ children }) {
       console.log('error', err.message);
       // setLoading(false);
     }
-
-    // firebase
-    //   .auth()
-    //   .signInWithEmailAndPassword(email, password)
-    //   .then((response) => {
-    //     setUser(response);
-    //     router.push('/dashboard');
-
-    //     console.log('success', response);
-    //   })
-    //   .catch((error) => {
-    //     console.log('error', error.message);
-    //   });
   };
 
   const signOut = () => {

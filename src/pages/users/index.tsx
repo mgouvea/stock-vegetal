@@ -5,7 +5,6 @@ import {
   Flex,
   Heading,
   Icon,
-  Spinner,
   Table,
   Tbody,
   Td,
@@ -14,19 +13,13 @@ import {
   Thead,
   Tr,
   useBreakpointValue,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Stack,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { RiAddLine, RiPencilLine } from 'react-icons/ri';
 import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
 import { SideBar } from '../../components/Sidebar';
-import { useQuery } from 'react-query';
 import { SkeletonTables } from '../../components/SkeletonTables';
-import { api } from '../../services/api';
 import { useUsers } from '../../services/hooks/useUsers';
 
 export default function UserList() {

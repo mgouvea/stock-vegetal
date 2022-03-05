@@ -1,68 +1,60 @@
 import {
-  Badge,
   Box,
   Button,
   Flex,
   Heading,
   Icon,
   Spinner,
-  Table,
-  Tbody,
-  Td,
   Text,
-  Th,
-  Thead,
-  Tr,
   IconButton,
   useBreakpointValue,
   Stack,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { RiAddLine } from 'react-icons/ri';
-import { useQuery } from 'react-query';
 import { Header } from '../../components/Header';
-import { Pagination } from '../../components/Pagination';
 import { SideBar } from '../../components/Sidebar';
 import { SkeletonTables } from '../../components/SkeletonTables';
 import { TableVegetal } from '../../components/Tables/TableVegetal';
 import { VegetalMobileCard } from '../../components/VegetalMobileCard';
 
 import { RiRefreshLine } from 'react-icons/ri';
-import { api } from '../../services/api';
 import { useVegetal } from '../../services/hooks/useVegetal';
-import { useEffect, useState } from 'react';
-
-import { firebase, auth } from '../../services/firebase';
+import { useEffect } from 'react';
 
 export default function EntradaVegetal() {
   const { data, isLoading, isFetching, error, refetch } = useVegetal();
-  const [allVegetal, setAllVegetal] = useState([]);
+  // const [allVegetal, setAllVegetal] = useState([]);
 
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
 
-  let listaVegetal = [];
-
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection('entrada')
-      .get()
-      .then((res) => {
-        res.docs.forEach((doc) => {
-          listaVegetal.push({
-            ...listaVegetal,
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-      });
-
-    console.log(listaVegetal);
-    setAllVegetal(listaVegetal);
+    console.log(data);
   }, []);
+
+  // let listaVegetal = [];
+
+  // useEffect(() => {
+  //   firebase
+  //     .firestore()
+  //     .collection('entrada')
+  //     .get()
+  //     .then((res) => {
+  //       res.docs.forEach((doc) => {
+  //         listaVegetal.push({
+  //           ...listaVegetal,
+  //           id: doc.id,
+  //           ...doc.data(),
+  //         });
+  //       });
+  //     });
+
+  //   console.log(listaVegetal);
+  //   setAllVegetal(listaVegetal);
+  // }, []);
 
   return (
     <Box>
@@ -114,11 +106,11 @@ export default function EntradaVegetal() {
                 <Text>Falha ao exibir dados </Text>
               </Flex>
             ) : (
-              <TableVegetal data={allVegetal} />
+              <TableVegetal data={data} />
             )
           ) : (
             <Box>
-              <VegetalMobileCard data={allVegetal} />
+              <VegetalMobileCard data={data} />
             </Box>
           )}
           {/* <Pagination /> */}

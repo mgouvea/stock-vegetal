@@ -50,7 +50,7 @@ export function TableConsumo({ data }) {
             </Td>
             <Td>{cons.dirigente}</Td>
             <Td>
-              <Badge colorScheme={'green'} variant="solid" fontSize="md">
+              <Badge colorScheme={'red'} variant="solid" fontSize="md">
                 {cons.consumo} L
               </Badge>
             </Td>
@@ -73,7 +73,7 @@ export function TableConsumo({ data }) {
                 <HStack spacing="2">
                   <Text fontWeight="bold">Explanação:</Text>
                   <Text fontSize="sm" color="gray.300">
-                    {cons.explanação}
+                    {cons.explanacao}
                   </Text>
                 </HStack>
               </Box>
@@ -83,7 +83,7 @@ export function TableConsumo({ data }) {
                 <HStack spacing="2">
                   <Text fontWeight="bold">Pessoas:</Text>
                   <Text fontSize="sm" color="gray.300">
-                    {cons.pessoas}
+                    {cons.qtdPessoas}
                   </Text>
                 </HStack>
                 <HStack spacing="2">

@@ -1,63 +1,53 @@
 import {
-  Badge,
   Box,
   Button,
   Flex,
   Heading,
-  HStack,
   Icon,
   IconButton,
   Spinner,
   Stack,
-  Table,
-  Tbody,
-  Td,
   Text,
-  Th,
-  Thead,
-  Tr,
   useBreakpointValue,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { RiAddLine } from 'react-icons/ri';
 import { Header } from '../../components/Header';
-import { Pagination } from '../../components/Pagination';
 import { SideBar } from '../../components/Sidebar';
 import { ConsumoMobileCard } from '../../components/ConsumoMobileCard';
-import { useQuery } from 'react-query';
 import { TableConsumo } from '../../components/Tables/TableConsumo';
 import { SkeletonTables } from '../../components/SkeletonTables';
 import { RiRefreshLine } from 'react-icons/ri';
-import { api } from '../../services/api';
 import { useConsumo } from '../../services/hooks/useConsumo';
-import { useEffect, useState } from 'react';
-
-import { firebase, auth } from '../../services/firebase';
+import { useEffect } from 'react';
 
 export default function Consumo() {
   const { data, isLoading, isFetching, error, refetch } = useConsumo();
-  const [allConsumo, setAllConsumo] = useState([]);
-
-  let listaConsumo = [];
+  // const [allConsumo, setAllConsumo] = useState([]);
 
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection('consumo')
-      .get()
-      .then((res) => {
-        res.docs.forEach((doc) => {
-          listaConsumo.push({
-            ...listaConsumo,
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-      });
-
-    console.log(listaConsumo);
-    setAllConsumo(listaConsumo);
+    console.log(data);
   }, []);
+  // let listaConsumo = [];
+
+  // useEffect(() => {
+  //   firebase
+  //     .firestore()
+  //     .collection('consumo')
+  //     .get()
+  //     .then((res) => {
+  //       res.docs.forEach((doc) => {
+  //         listaConsumo.push({
+  //           ...listaConsumo,
+  //           id: doc.id,
+  //           ...doc.data(),
+  //         });
+  //       });
+  //     });
+
+  //   console.log(listaConsumo);
+  //   setAllConsumo(listaConsumo);
+  // }, []);
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -114,11 +104,19 @@ export default function Consumo() {
                 <Text>Falha ao exibir dados </Text>
               </Flex>
             ) : (
-              <TableConsumo data={allConsumo} />
+              <TableConsumo data={data} />
             )
+          ) : isLoading ? (
+            <Flex justify="center">
+              <Spinner />
+            </Flex>
+          ) : error ? (
+            <Flex justify="center">
+              <Text>Falha ao exibir dados </Text>
+            </Flex>
           ) : (
             <Box>
-              <ConsumoMobileCard data={allConsumo} />
+              <ConsumoMobileCard data={data} />
             </Box>
           )}
 

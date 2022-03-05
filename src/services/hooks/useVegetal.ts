@@ -1,9 +1,6 @@
 import { useQuery } from 'react-query';
 import { api } from '../api';
 
-import { firebase, auth } from '../../services/firebase';
-import { useState } from 'react';
-
 type Vegetal = {
   id: string;
   cod: number;
@@ -18,38 +15,26 @@ type Vegetal = {
 
 export async function getVegetal(): Promise<Vegetal[]> {
   const { data } = await api.get('vegetal');
-  // const [data, setData] = useState([]);
 
-  // const vegetal = listaVegetal.map((v) => {
-  //   return {
-  //     id: v.id,
-  //     cod: v.cod,
-  //     tipoMariri: v.tipoMariri,
-  //     mpreparo: v.mpreparo,
-  //     npreparo: v.npreparo,
-  //     qtd: v.qtd,
-  //     grau: v.grau,
-  //     obs: v.obs,
-  //     dataPreparo: v.dataPreparo,
-  //   };
-  // });
+  // formatar dados e carregar só uma vez
+  const vegetal = data?.map((v) => {
+    return {
+      id: v.id,
+      cod: v.cod,
+      tipoMariri: v.tipoMariri,
+      tipoChacrona: v.tipoChacrona,
+      qtd: v.qtd,
+      dataPreparo: v.dataPreparo,
+      grau: v.grau,
+      npreparo: v.npreparo,
+      mpreparo: v.mpreparo,
+      origemMariri: v.origemMariri,
+      origemChacrona: v.origemChacrona,
+      obs: v.obs,
+    };
+  });
 
-  // formatar dados e carregar só uma vez MIRAGE JS
-  // const vegetal = data?.vegetals?.map((v) => {
-  //   return {
-  //     id: v.id,
-  //     cod: v.cod,
-  //     tipoMariri: v.tipoMariri,
-  //     mpreparo: v.mpreparo,
-  //     npreparo: v.npreparo,
-  //     qtd: v.qtd,
-  //     grau: v.grau,
-  //     obs: v.obs,
-  //     dataPreparo: v.dataPreparo,
-  //   };
-  // });
-
-  return data;
+  return vegetal;
 }
 
 export function useVegetal() {
