@@ -28,26 +28,10 @@ export default function Consumo() {
   useEffect(() => {
     console.log(data);
   }, []);
-  // let listaConsumo = [];
 
-  // useEffect(() => {
-  //   firebase
-  //     .firestore()
-  //     .collection('consumo')
-  //     .get()
-  //     .then((res) => {
-  //       res.docs.forEach((doc) => {
-  //         listaConsumo.push({
-  //           ...listaConsumo,
-  //           id: doc.id,
-  //           ...doc.data(),
-  //         });
-  //       });
-  //     });
-
-  //   console.log(listaConsumo);
-  //   setAllConsumo(listaConsumo);
-  // }, []);
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   const isWideVersion = useBreakpointValue({
     base: false,

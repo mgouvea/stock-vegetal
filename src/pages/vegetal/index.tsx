@@ -24,33 +24,15 @@ import { useEffect } from 'react';
 
 export default function EntradaVegetal() {
   const { data, isLoading, isFetching, error, refetch } = useVegetal();
-  // const [allVegetal, setAllVegetal] = useState([]);
+
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
-
-  // let listaVegetal = [];
-
-  // useEffect(() => {
-  //   firebase
-  //     .firestore()
-  //     .collection('entrada')
-  //     .get()
-  //     .then((res) => {
-  //       res.docs.forEach((doc) => {
-  //         listaVegetal.push({
-  //           ...listaVegetal,
-  //           id: doc.id,
-  //           ...doc.data(),
-  //         });
-  //       });
-  //     });
-
-  //   console.log(listaVegetal);
-  //   setAllVegetal(listaVegetal);
-  // }, []);
 
   return (
     <Box>
@@ -106,6 +88,12 @@ export default function EntradaVegetal() {
             ) : (
               <TableVegetal data={data} />
             )
+          ) : isLoading ? (
+            <SkeletonTables />
+          ) : error ? (
+            <Flex justify="center">
+              <Text>Falha ao exibir dados </Text>
+            </Flex>
           ) : (
             <Box>
               <VegetalMobileCard data={data} />
