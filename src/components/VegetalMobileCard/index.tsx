@@ -22,7 +22,7 @@ export function VegetalMobileCard({ data }) {
   return (
     <>
       {data?.map((veg) => (
-        <Center py={6}>
+        <Center py={6} key={veg.id}>
           <Box
             maxW={'270px'}
             w={210}

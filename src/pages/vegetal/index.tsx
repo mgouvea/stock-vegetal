@@ -31,10 +31,6 @@ export default function EntradaVegetal() {
     lg: true,
   });
 
-  useEffect(() => {
-    console.log(data);
-  }, []);
-
   // let listaVegetal = [];
 
   // useEffect(() => {
@@ -80,20 +76,22 @@ export default function EntradaVegetal() {
                 icon={<RiRefreshLine color="#fff" />}
               />
               <Link href="/vegetal/createVegetal" passHref>
-                <Button
-                  as="a"
-                  size="sm"
-                  fontSize="sm"
-                  colorScheme="teal"
-                  leftIcon={
-                    <Icon
-                      as={RiAddLine}
-                      fontSize={isWideVersion ? '20' : '15'}
-                    />
-                  }
-                >
-                  {isWideVersion ? 'Novo Registro' : 'Novo'}
-                </Button>
+                <a>
+                  <Button
+                    // as="a"
+                    size="sm"
+                    fontSize="sm"
+                    colorScheme="teal"
+                    leftIcon={
+                      <Icon
+                        as={RiAddLine}
+                        fontSize={isWideVersion ? '20' : '15'}
+                      />
+                    }
+                  >
+                    {isWideVersion ? 'Novo Registro' : 'Novo'}
+                  </Button>
+                </a>
               </Link>
             </Stack>
           </Flex>

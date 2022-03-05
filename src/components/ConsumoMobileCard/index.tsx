@@ -22,7 +22,7 @@ export function ConsumoMobileCard({ data }) {
   return (
     <>
       {data?.map((c) => (
-        <Center py={6}>
+        <Center py={6} key={c.id}>
           <Box
             maxW={'270px'}
             w={210}

@@ -78,20 +78,22 @@ export default function Consumo() {
                 icon={<RiRefreshLine color="#fff" />}
               />
               <Link href="/consumo/createConsumo" passHref>
-                <Button
-                  as="a"
-                  size="sm"
-                  fontSize="sm"
-                  colorScheme="teal"
-                  leftIcon={
-                    <Icon
-                      as={RiAddLine}
-                      fontSize={isWideVersion ? '20' : '15'}
-                    />
-                  }
-                >
-                  {isWideVersion ? 'Novo Consumo' : 'Novo'}
-                </Button>
+                <a>
+                  <Button
+                    // as="a"
+                    size="sm"
+                    fontSize="sm"
+                    colorScheme="teal"
+                    leftIcon={
+                      <Icon
+                        as={RiAddLine}
+                        fontSize={isWideVersion ? '20' : '15'}
+                      />
+                    }
+                  >
+                    {isWideVersion ? 'Novo Consumo' : 'Novo'}
+                  </Button>
+                </a>
               </Link>
             </Stack>
           </Flex>
