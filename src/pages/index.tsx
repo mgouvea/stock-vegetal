@@ -19,8 +19,6 @@ import Footer from '../components/Footer';
 import useAuth from '../services/hooks/useAuth';
 
 import { useRouter } from 'next/dist/client/router';
-import { firebase, auth } from '../services/firebase';
-import { useEffect } from 'react';
 
 type SignInFormData = {
   email: string;
@@ -36,14 +34,14 @@ export default function Home() {
   const { user, signIn } = useAuth();
   const router = useRouter();
 
-  const sigInGoogle = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const result = await auth.signInWithPopup(provider);
-    router.push('/dashboard');
-    console.log('user', result);
+  // const sigInGoogle = async () => {
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   const result = await auth.signInWithPopup(provider);
+  //   router.push('/dashboard');
+  //   console.log('user', result);
 
-    return result;
-  };
+  //   return result;
+  // };
 
   console.log('1teste', user);
 
@@ -125,16 +123,16 @@ export default function Home() {
           >
             Entrar
           </Button>
-          <IconButton
+          {/* <IconButton
             aria-label="Entrar com google"
             // colorScheme="whiteAlpha"
             mt="4"
             icon={<FcGoogle fontSize="20" />}
             onClick={sigInGoogle}
-          />
-          <Text color="gray.400" fontSize="sm" textAlign="center" mt="1">
+          /> */}
+          {/* <Text color="gray.400" fontSize="sm" textAlign="center" mt="1">
             Entrar com google
-          </Text>
+          </Text> */}
         </Flex>
       </Flex>
       <Footer />

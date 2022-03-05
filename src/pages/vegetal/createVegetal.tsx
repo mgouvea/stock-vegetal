@@ -11,8 +11,6 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Input } from '../../components/Forms/Input';
-import { SelectInput } from '../../components/Forms/SelectInput';
-import { SwitchInput } from '../../components/Forms/SwitchInput';
 import { Header } from '../../components/Header';
 import { SideBar } from '../../components/Sidebar';
 
@@ -20,15 +18,14 @@ import { IoIosArrowDropleft } from 'react-icons/io';
 import Link from 'next/link';
 import { TextAreaInput } from '../../components/Forms/TextAreaInput';
 
-const graus = ['Aguado', 'Fraco', 'Bom', 'Forte'];
+// const graus = ['Aguado', 'Fraco', 'Bom', 'Forte'];
 
 import * as yup from 'yup';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { firebase } from '../../services/firebase';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 type CreateVegetalFormData = {
   cod: number;
@@ -37,7 +34,7 @@ type CreateVegetalFormData = {
   qtd: number;
   qtdAtual: number;
   data: string;
-  grau?: string;
+  // grau?: string;
   npreparo: string;
   mpreparo: string;
   origemMariri?: string;
@@ -50,17 +47,16 @@ const createVegetalFormSchema = yup.object().shape({
   tipoMariri: yup.string().required('Tipo Mariri obrigatório'),
   qtd: yup.string().required('Quantidade obrigatória'),
   data: yup.string().required('Data obrigatória'),
-  grau: yup.string().required('Grau obrigatório'),
+  // grau: yup.string().required('Grau obrigatório'),
 });
 
 export default function CreateVegetal() {
-  const db = firebase.firestore();
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createVegetalFormSchema),
   });
 
   const { errors } = formState;
-  const routes = useRouter();
+  // const routes = useRouter();
 
   const handleCreateVegetal: SubmitHandler<CreateVegetalFormData> = async (
     values
@@ -68,43 +64,20 @@ export default function CreateVegetal() {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     console.log(values);
-    const {
-      cod,
-      tipoMariri,
-      tipoChacrona,
-      qtd,
-      data,
-      grau,
-      npreparo,
-      mpreparo,
-      origemMariri,
-      origemChacrona,
-      obs,
-    } = values;
-    const qtdAtual = qtd;
-
-    try {
-      db.collection('entrada')
-        .add({
-          cod,
-          tipoMariri,
-          tipoChacrona,
-          qtd,
-          qtdAtual,
-          data,
-          grau,
-          npreparo,
-          mpreparo,
-          origemMariri,
-          origemChacrona,
-          obs,
-        })
-        .then(() => {
-          routes.push('/vegetal');
-        });
-    } catch (err) {
-      console.log('error', err.message);
-    }
+    // const {
+    //   cod,
+    //   tipoMariri,
+    //   tipoChacrona,
+    //   qtd,
+    //   data,
+    //   grau,
+    //   npreparo,
+    //   mpreparo,
+    //   origemMariri,
+    //   origemChacrona,
+    //   obs,
+    // } = values;
+    // const qtdAtual = qtd;
   };
 
   const isWideVersion = useBreakpointValue({
@@ -160,15 +133,15 @@ export default function CreateVegetal() {
                 {...register('tipoMariri')}
                 error={errors.tipoMariri}
               />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
                 name="tipoChacrona"
                 label="Tipo Chacrona"
                 {...register('tipoChacrona')}
                 error={errors.tipoChacrona}
               />
-            </SimpleGrid>
-
-            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
                 name="qtd"
                 type="number"
@@ -176,6 +149,9 @@ export default function CreateVegetal() {
                 {...register('qtd')}
                 error={errors.qtd}
               />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
                 name="data"
                 type="date"
@@ -183,45 +159,35 @@ export default function CreateVegetal() {
                 {...register('data')}
                 error={errors.data}
               />
-              <SelectInput
-                name="grau"
-                label="Grau"
-                optSelect={graus}
-                {...register('grau')}
-                error={errors.grau}
-              />
-            </SimpleGrid>
-
-            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
                 name="npreparo"
                 label="Núcleo Preparo"
                 {...register('npreparo')}
               />
+            </SimpleGrid>
+            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
                 name="mpreparo"
                 label="Mestre Preparo"
                 {...register('mpreparo')}
               />
-            </SimpleGrid>
-            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
                 name="origemMariri"
                 label="Origem Mariri"
                 {...register('origemMariri')}
               />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
                 name="origemChacrona"
                 label="Origem Chacrona"
                 {...register('origemChacrona')}
               />
-            </SimpleGrid>
-
-            <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <TextAreaInput
                 name="obs"
                 label="Observação"
-                w="48.5%"
+                //w="48.5%"
                 {...register('obs')}
               />
             </SimpleGrid>

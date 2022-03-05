@@ -18,8 +18,7 @@ import { SideBar } from '../../components/Sidebar';
 
 import { IoIosArrowDropleft } from 'react-icons/io';
 import Link from 'next/link';
-import { firebase } from '../../services/firebase';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 const tipoSessao = [
   'Extra',
@@ -67,8 +66,7 @@ const createConsumoFormSchema = yup.object().shape({
 export default function CreateConsumo() {
   const [flag, setFlag] = useBoolean();
 
-  const db = firebase.firestore();
-  const routes = useRouter();
+  // const routes = useRouter();
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createConsumoFormSchema),
@@ -83,59 +81,19 @@ export default function CreateConsumo() {
 
     console.log(values);
 
-    const {
-      cod,
-      tipoSessao,
-      dirigente,
-      consumo,
-      dataSessao,
-      assistente,
-      auxiliar,
-      leitura,
-      explanacao,
-      qtdPessoas,
-      repeticoes,
-    } = values;
-
-    try {
-      flag
-        ? db
-            .collection('consumo')
-            .add({
-              cod,
-              tipoSessao,
-              dirigente,
-              consumo,
-              dataSessao,
-              assistente,
-              auxiliar,
-              leitura,
-              explanacao,
-              qtdPessoas,
-              repeticoes,
-            })
-            .then(() => {
-              routes.push('/consumo');
-            })
-        : db
-            .collection('consumo')
-            .add({
-              cod,
-              tipoSessao,
-              dirigente,
-              consumo,
-              dataSessao,
-              assistente,
-              auxiliar,
-              qtdPessoas,
-              repeticoes,
-            })
-            .then(() => {
-              routes.push('/consumo');
-            });
-    } catch (err) {
-      console.log('error', err.message);
-    }
+    // const {
+    //   cod,
+    //   tipoSessao,
+    //   dirigente,
+    //   consumo,
+    //   dataSessao,
+    //   assistente,
+    //   auxiliar,
+    //   leitura,
+    //   explanacao,
+    //   qtdPessoas,
+    //   repeticoes,
+    // } = values;
   };
 
   const isWideVersion = useBreakpointValue({
