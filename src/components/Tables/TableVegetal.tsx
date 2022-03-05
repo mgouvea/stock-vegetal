@@ -30,7 +30,7 @@ export function TableVegetal({ data }) {
         </Thead>
         <Tbody>
           {data?.map((veg) => (
-            <Tr>
+            <Tr key={veg.id}>
               <Td>{veg.cod}</Td>
               <Td>{veg.tipoMariri}</Td>
               <Td>
