@@ -88,6 +88,7 @@ export default function Consumo() {
             ) : error ? (
               <Flex justify="center">
                 <Text>Falha ao exibir dados </Text>
+                {console.log(error)}
               </Flex>
             ) : (
               <TableConsumo data={data} />
@@ -99,6 +100,7 @@ export default function Consumo() {
           ) : error ? (
             <Flex justify="center">
               <Text>Falha ao exibir dados </Text>
+              {console.log(error)}
             </Flex>
           ) : (
             <Box>
