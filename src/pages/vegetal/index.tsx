@@ -20,14 +20,9 @@ import { VegetalMobileCard } from '../../components/VegetalMobileCard';
 
 import { RiRefreshLine } from 'react-icons/ri';
 import { useVegetal } from '../../services/hooks/useVegetal';
-import { useEffect } from 'react';
 
 export default function EntradaVegetal() {
   const { data, isLoading, isFetching, error, refetch } = useVegetal();
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
 
   const isWideVersion = useBreakpointValue({
     base: false,

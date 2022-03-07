@@ -19,19 +19,9 @@ import { TableConsumo } from '../../components/Tables/TableConsumo';
 import { SkeletonTables } from '../../components/SkeletonTables';
 import { RiRefreshLine } from 'react-icons/ri';
 import { useConsumo } from '../../services/hooks/useConsumo';
-import { useEffect } from 'react';
 
 export default function Consumo() {
   const { data, isLoading, isFetching, error, refetch } = useConsumo();
-  // const [allConsumo, setAllConsumo] = useState([]);
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
 
   const isWideVersion = useBreakpointValue({
     base: false,

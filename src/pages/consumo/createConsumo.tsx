@@ -23,6 +23,7 @@ import Link from 'next/link';
 const tipoSessao = [
   'Extra',
   'Escala',
+  'Preparo',
   'Instrutiva',
   'Escala anual',
   'Adventício',
@@ -36,6 +37,9 @@ import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SwitchInput } from '../../components/Forms/SwitchInput';
+import { useRouter } from 'next/router';
+import { useMutation } from 'react-query';
+import { api } from '../../services/api';
 
 type CreateConsumoFormData = {
   cod: number;
@@ -64,9 +68,15 @@ const createConsumoFormSchema = yup.object().shape({
 });
 
 export default function CreateConsumo() {
-  const [flag, setFlag] = useBoolean();
+  const createConsumo = useMutation(async (consumo: CreateConsumoFormData) => {
+    const response = await api.post('/consumo/createConsumo', {
+      ...consumo,
+    });
+    return response.data.consumo;
+  });
 
-  // const routes = useRouter();
+  const [flag, setFlag] = useBoolean();
+  const routes = useRouter();
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createConsumoFormSchema),
@@ -77,23 +87,25 @@ export default function CreateConsumo() {
   const handleCreateConsumo: SubmitHandler<CreateConsumoFormData> = async (
     values
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    console.log(values);
-
-    // const {
-    //   cod,
-    //   tipoSessao,
-    //   dirigente,
-    //   consumo,
-    //   dataSessao,
-    //   assistente,
-    //   auxiliar,
-    //   leitura,
-    //   explanacao,
-    //   qtdPessoas,
-    //   repeticoes,
-    // } = values;
+    const formatterValues = {
+      cod: Number(values.cod),
+      tipoSessao: values.tipoSessao,
+      dirigente: values.dirigente,
+      consumo: Number(values.consumo),
+      dataSessao: values.dataSessao,
+      assistente: values.assistente,
+      auxiliar: values.auxiliar,
+      leitura: values.leitura,
+      explanacao: values.explanacao,
+      qtdPessoas: Number(values.qtdPessoas),
+      repeticoes: Number(values.repeticoes),
+    };
+    try {
+      await createConsumo.mutateAsync(formatterValues);
+      routes.push('/consumo');
+    } catch (err) {
+      console.log('error', err.message);
+    }
   };
 
   const isWideVersion = useBreakpointValue({

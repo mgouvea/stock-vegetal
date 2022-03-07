@@ -1,20 +1,23 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDatabase } from '../../services/mongodb';
+import { connectToDatabase } from '../../../services/mongodb';
 
-const handlerVegetal = async (req: NextApiRequest, res: NextApiResponse) => {
+const handlerCreateVegetal = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   try {
     const { method } = req;
 
     switch (method) {
-      case 'GET':
+      case 'POST':
         // acesso ao mongoDB
         const { db } = await connectToDatabase();
-        const data = await db.collection('vegetal').find().toArray();
+        const data = await db.collection('vegetal').insertOne(req.body);
 
-        res.status(200).json(data);
+        res.status(200).json(data.ops[0]);
         break;
       default:
-        res.setHeader('Allow', ['GET', 'PUT']);
+        res.setHeader('Allow', ['POST']);
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (err) {
@@ -22,4 +25,4 @@ const handlerVegetal = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default handlerVegetal;
+export default handlerCreateVegetal;

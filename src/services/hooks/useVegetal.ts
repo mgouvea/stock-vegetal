@@ -8,7 +8,6 @@ type Vegetal = {
   mpreparo: string;
   npreparo: string;
   qtd: number;
-  grau: string;
   obs: string;
   dataPreparo: string;
 };
@@ -25,7 +24,6 @@ export async function getVegetal(): Promise<Vegetal[]> {
       tipoChacrona: v.tipoChacrona,
       qtd: v.qtd,
       dataPreparo: v.dataPreparo,
-      grau: v.grau,
       npreparo: v.npreparo,
       mpreparo: v.mpreparo,
       origemMariri: v.origemMariri,

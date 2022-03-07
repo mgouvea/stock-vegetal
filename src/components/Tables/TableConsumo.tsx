@@ -1,13 +1,7 @@
 import {
   Badge,
   Box,
-  Button,
-  Flex,
-  Heading,
   HStack,
-  Icon,
-  Spinner,
-  Stack,
   Table,
   Tbody,
   Td,
@@ -15,7 +9,6 @@ import {
   Th,
   Thead,
   Tr,
-  useBreakpointValue,
 } from '@chakra-ui/react';
 
 export function TableConsumo({ data }) {
@@ -29,11 +22,21 @@ export function TableConsumo({ data }) {
           <Th color="gray.500" width="10">
             TIPO SESSÃO
           </Th>
-          <Th color="gray.500">DIRIGENTE</Th>
-          <Th color="gray.500">CONSUMO</Th>
-          <Th color="gray.500">ASSISTENTE - AUXILIAR(ES)</Th>
-          <Th color="gray.500">INFORMAÇÕES SESSÃO</Th>
-          <Th color="gray.500">PESSOAS</Th>
+          <Th color="gray.500" w="6">
+            DIRIGENTE
+          </Th>
+          <Th color="gray.500" w="6">
+            CONSUMO
+          </Th>
+          <Th color="gray.500" w="6">
+            ASSISTENTE - AUXILIAR(ES)
+          </Th>
+          <Th color="gray.500" w="6">
+            INFORMAÇÕES SESSÃO
+          </Th>
+          <Th color="gray.500" w="6">
+            PESSOAS
+          </Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -48,7 +51,7 @@ export function TableConsumo({ data }) {
                 </Text>
               </Box>
             </Td>
-            <Td>{cons.dirigente}</Td>
+            <Td fontWeight="bold">{cons.dirigente}</Td>
             <Td>
               <Badge colorScheme={'red'} variant="solid" fontSize="md">
                 {cons.consumo} L

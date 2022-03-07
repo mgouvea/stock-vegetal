@@ -18,12 +18,14 @@ import { IoIosArrowDropleft } from 'react-icons/io';
 import Link from 'next/link';
 import { TextAreaInput } from '../../components/Forms/TextAreaInput';
 
-// const graus = ['Aguado', 'Fraco', 'Bom', 'Forte'];
-
 import * as yup from 'yup';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+import { useMutation } from 'react-query';
+import { api } from '../../services/api';
+import { useRouter } from 'next/router';
 
 // import { useRouter } from 'next/router';
 
@@ -33,8 +35,7 @@ type CreateVegetalFormData = {
   tipoChacrona?: string;
   qtd: number;
   qtdAtual: number;
-  data: string;
-  // grau?: string;
+  dataPreparo: string;
   npreparo: string;
   mpreparo: string;
   origemMariri?: string;
@@ -46,38 +47,49 @@ const createVegetalFormSchema = yup.object().shape({
   cod: yup.string().required('ID obrigatório'),
   tipoMariri: yup.string().required('Tipo Mariri obrigatório'),
   qtd: yup.string().required('Quantidade obrigatória'),
-  data: yup.string().required('Data obrigatória'),
+  dataPreparo: yup.string().required('Data obrigatória'),
   // grau: yup.string().required('Grau obrigatório'),
 });
 
 export default function CreateVegetal() {
+  const createVegetal = useMutation(async (vegetal: CreateVegetalFormData) => {
+    const response = await api.post('/vegetal/createVegetal', {
+      ...vegetal,
+    });
+    return response.data.vegetal;
+  });
+
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createVegetalFormSchema),
   });
 
   const { errors } = formState;
-  // const routes = useRouter();
+  const routes = useRouter();
 
   const handleCreateVegetal: SubmitHandler<CreateVegetalFormData> = async (
     values
   ) => {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
+    const formatterValues = {
+      cod: Number(values.cod),
+      tipoMariri: values.tipoMariri,
+      tipoChacrona: values.tipoChacrona,
+      qtd: Number(values.qtd),
+      dataPreparo: values.dataPreparo,
+      npreparo: values.npreparo,
+      mpreparo: values.mpreparo,
+      origemMariri: values.origemMariri,
+      origemChacrona: values.origemChacrona,
+      obs: values.obs,
+      qtdAtual: Number(values.qtd),
+    };
 
-    console.log(values);
-    // const {
-    //   cod,
-    //   tipoMariri,
-    //   tipoChacrona,
-    //   qtd,
-    //   data,
-    //   grau,
-    //   npreparo,
-    //   mpreparo,
-    //   origemMariri,
-    //   origemChacrona,
-    //   obs,
-    // } = values;
-    // const qtdAtual = qtd;
+    try {
+      await createVegetal.mutateAsync(formatterValues);
+      routes.push('/vegetal');
+    } catch (err) {
+      console.log('error', err.message);
+    }
   };
 
   const isWideVersion = useBreakpointValue({
@@ -145,6 +157,7 @@ export default function CreateVegetal() {
               <Input
                 name="qtd"
                 type="number"
+                step={0.5}
                 label="Quantidade Preparada"
                 {...register('qtd')}
                 error={errors.qtd}
@@ -153,11 +166,11 @@ export default function CreateVegetal() {
 
             <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
               <Input
-                name="data"
+                name="dataPreparo"
                 type="date"
                 label="Data Preparo"
-                {...register('data')}
-                error={errors.data}
+                {...register('dataPreparo')}
+                error={errors.dataPreparo}
               />
               <Input
                 name="npreparo"
@@ -187,7 +200,6 @@ export default function CreateVegetal() {
               <TextAreaInput
                 name="obs"
                 label="Observação"
-                //w="48.5%"
                 {...register('obs')}
               />
             </SimpleGrid>

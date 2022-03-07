@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDatabase } from '../../services/mongodb';
+import { connectToDatabase } from '../../../services/mongodb';
 
-const handlerConsumo = async (req: NextApiRequest, res: NextApiResponse) => {
+const handlerVegetal = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { method } = req;
 
@@ -9,7 +9,7 @@ const handlerConsumo = async (req: NextApiRequest, res: NextApiResponse) => {
       case 'GET':
         // acesso ao mongoDB
         const { db } = await connectToDatabase();
-        const data = await db.collection('consumo').find().toArray();
+        const data = await db.collection('vegetal').find().toArray();
 
         res.status(200).json(data);
         break;
@@ -22,4 +22,4 @@ const handlerConsumo = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default handlerConsumo;
+export default handlerVegetal;
