@@ -1,4 +1,12 @@
-import { Badge, Box, Flex, SimpleGrid, Text, theme } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Flex,
+  SimpleGrid,
+  Text,
+  theme,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { ApexOptions } from 'apexcharts';
 import { Header } from '../components/Header';
@@ -23,6 +31,22 @@ const optionsPie: ApexOptions = {
   },
   dataLabels: {
     enabled: false,
+  },
+  labels: ['ID: 29', 'ID: 39', 'ID: 45', 'ID: 54', 'ID: 93'],
+};
+const optionsPieMobile: ApexOptions = {
+  chart: {
+    type: 'donut',
+    toolbar: {
+      show: false,
+    },
+    zoom: {
+      enabled: false,
+    },
+    foreColor: theme.colors.gray[300],
+  },
+  dataLabels: {
+    enabled: true,
   },
   labels: ['ID: 29', 'ID: 39', 'ID: 45', 'ID: 54', 'ID: 93'],
 };
@@ -83,6 +107,10 @@ const series = [
 ];
 
 export default function Dashboard() {
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    lg: true,
+  });
   return (
     <Flex direction="column" h="100vh">
       <Header />
@@ -108,12 +136,21 @@ export default function Dashboard() {
                 {total} L{' '}
               </Badge>
             </Text>
-            <Chart
-              options={optionsPie}
-              series={seriesPie}
-              type="donut"
-              height={173}
-            />
+            {isWideVersion ? (
+              <Chart
+                options={optionsPie}
+                series={seriesPie}
+                type="donut"
+                height={173}
+              />
+            ) : (
+              <Chart
+                options={optionsPieMobile}
+                series={seriesPie}
+                type="donut"
+                height={173}
+              />
+            )}
           </Box>
 
           <Box p={['6', '8']} bg="blue.800" borderRadius={8} pb="4">
