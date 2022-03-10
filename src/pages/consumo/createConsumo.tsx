@@ -41,8 +41,6 @@ import { useRouter } from 'next/router';
 import { useQueryClient, useMutation } from 'react-query';
 import { api } from '../../services/api';
 
-const queryClient = useQueryClient();
-
 type CreateConsumoFormData = {
   cod: number;
   tipoSessao: string;
@@ -70,6 +68,7 @@ const createConsumoFormSchema = yup.object().shape({
 });
 
 export default function CreateConsumo() {
+  const queryClient = useQueryClient();
   const createConsumo = useMutation(
     async (consumo: CreateConsumoFormData) => {
       const response = await api.post('/consumo/createConsumo', {
