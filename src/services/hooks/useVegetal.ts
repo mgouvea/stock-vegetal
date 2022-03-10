@@ -5,11 +5,15 @@ type Vegetal = {
   id: string;
   cod: number;
   tipoMariri: string;
-  mpreparo: string;
-  npreparo: string;
+  tipoChacrona: string;
   qtd: number;
-  obs: string;
+  qtdAtual: number;
   dataPreparo: string;
+  npreparo: string;
+  mpreparo: string;
+  origemMariri: string;
+  origemChacrona: string;
+  obs: string;
 };
 
 export async function getVegetal(): Promise<Vegetal[]> {
@@ -23,7 +27,8 @@ export async function getVegetal(): Promise<Vegetal[]> {
       tipoMariri: v.tipoMariri,
       tipoChacrona: v.tipoChacrona,
       qtd: v.qtd,
-      dataPreparo: v.dataPreparo,
+      qtdAtual: v.qtdAtual,
+      dataPreparo: new Date(v.dataPreparo).toLocaleDateString('pt-BR'),
       npreparo: v.npreparo,
       mpreparo: v.mpreparo,
       origemMariri: v.origemMariri,

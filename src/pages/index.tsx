@@ -5,18 +5,15 @@ import {
   Text,
   Icon,
   useBreakpointValue,
-  IconButton,
 } from '@chakra-ui/react';
 import { RiStarFill } from 'react-icons/ri';
-import { FcGoogle } from 'react-icons/fc';
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Input } from '../components/Forms/Input';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Footer from '../components/Footer';
-import useAuth from '../services/hooks/useAuth';
 
 import { useRouter } from 'next/dist/client/router';
 
@@ -31,37 +28,11 @@ const signInFormSchema = yup.object().shape({
 });
 
 export default function Home() {
-  const { user, signIn } = useAuth();
-  const router = useRouter();
-
-  // const sigInGoogle = async () => {
-  //   const provider = new firebase.auth.GoogleAuthProvider();
-  //   const result = await auth.signInWithPopup(provider);
-  //   router.push('/dashboard');
-  //   console.log('user', result);
-
-  //   return result;
-  // };
-
-  console.log('1teste', user);
-
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema),
   });
 
   const { errors } = formState;
-
-  const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise((resolve) => setTimeout(resolve, 750));
-
-    console.log(values);
-    await signIn(values.email, values.password);
-  };
-
-  const isWideVersion = useBreakpointValue({
-    base: false,
-    lg: true,
-  });
 
   return (
     <Stack justify="space-between" h="100vh">
@@ -96,7 +67,7 @@ export default function Home() {
           p="8"
           borderRadius={8}
           flexDir="column"
-          onSubmit={handleSubmit(handleSignIn)}
+          // onSubmit={handleSubmit(handleSignIn)}
         >
           <Stack spacing="4">
             <Input

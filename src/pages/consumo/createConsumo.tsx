@@ -38,8 +38,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SwitchInput } from '../../components/Forms/SwitchInput';
 import { useRouter } from 'next/router';
-import { useMutation } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 import { api } from '../../services/api';
+
+const queryClient = useQueryClient();
 
 type CreateConsumoFormData = {
   cod: number;
@@ -68,12 +70,19 @@ const createConsumoFormSchema = yup.object().shape({
 });
 
 export default function CreateConsumo() {
-  const createConsumo = useMutation(async (consumo: CreateConsumoFormData) => {
-    const response = await api.post('/consumo/createConsumo', {
-      ...consumo,
-    });
-    return response.data.consumo;
-  });
+  const createConsumo = useMutation(
+    async (consumo: CreateConsumoFormData) => {
+      const response = await api.post('/consumo/createConsumo', {
+        ...consumo,
+      });
+      return response.data.consumo;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('consumo');
+      },
+    }
+  );
 
   const [flag, setFlag] = useBoolean();
   const routes = useRouter();

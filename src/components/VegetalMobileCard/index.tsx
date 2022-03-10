@@ -76,10 +76,10 @@ export function VegetalMobileCard({ data }) {
                 </Stack>
                 <Stack spacing={0} align={'center'}>
                   <Text fontWeight={600} color="gray.500">
-                    {veg.grau}
-                  </Text>
-                  <Text fontSize={'sm'} color={'gray.500'}>
                     {veg.dataPreparo}
+                  </Text>
+                  <Text fontSize={'sm'} textAlign="center" color={'gray.500'}>
+                    {veg.obs}
                   </Text>
                 </Stack>
               </Stack>

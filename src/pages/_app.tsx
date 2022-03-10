@@ -1,6 +1,5 @@
 import { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
-import { AuthProvider } from '../contexts/AuthContext';
 import { theme } from '../styles/theme';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -19,11 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
-        <AuthProvider>
-          <SidebarDrawerProvider>
-            <Component {...pageProps} />
-          </SidebarDrawerProvider>
-        </AuthProvider>
+        <SidebarDrawerProvider>
+          <Component {...pageProps} />
+        </SidebarDrawerProvider>
       </ChakraProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
