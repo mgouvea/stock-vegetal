@@ -7,14 +7,14 @@ const Chart = dynamic(() => import('react-apexcharts'), {
 });
 
 export function LineBarConsumo() {
-  const { data } = useConsumo();
+  // const { data } = useConsumo();
 
-  const categoriesData = data.map((item) => item.dataSessao);
-  // const jsDateConverter = new Date(categoriesData?.date);
-  console.log(categoriesData);
+  // const categoriesData = data.map((item) => item.dataSessao);
+  // // const jsDateConverter = new Date(categoriesData?.date);
+  // console.log(categoriesData);
 
-  const consumo = data.map((item) => item.consumo);
-  console.log(consumo);
+  // const consumo = data.map((item) => item.consumo);
+  // console.log(consumo);
 
   const options = {
     chart: {
@@ -45,12 +45,12 @@ export function LineBarConsumo() {
       },
       categories: [
         '2021-12-31T00:00:00.000Z',
-        // '2022-01-01T00:00:00.000Z',
-        // '2022-01-06T00:00:00.000Z',
-        // '2022-01-15T00:00:00.000Z',
-        // '2022-01-22T00:00:00.000Z',
-        // '2022-02-05T00:00:00.000Z',
-        // '2022-02-10T00:00:00.000Z',
+        '2022-01-01T00:00:00.000Z',
+        '2022-01-06T00:00:00.000Z',
+        '2022-01-15T00:00:00.000Z',
+        '2022-01-22T00:00:00.000Z',
+        '2022-02-05T00:00:00.000Z',
+        '2022-02-10T00:00:00.000Z',
       ],
       // categories: categoriesData,
     },
@@ -68,8 +68,8 @@ export function LineBarConsumo() {
   const series = [
     {
       name: 'series-1',
-      // data: [20, 14, 10, 18, 12, 9, 15],
-      data: consumo,
+      data: [20, 14, 10, 18, 12, 9, 15],
+      // data: consumo,
     },
   ];
 

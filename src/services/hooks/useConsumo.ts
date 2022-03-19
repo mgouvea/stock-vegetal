@@ -29,7 +29,6 @@ export async function getConsumo(): Promise<Vegetal[]> {
       dirigente: cons.dirigente,
       consumo: cons.consumo,
       dataSessao: new Date(cons.dataSessao).toLocaleDateString('pt-BR'),
-      // dataSessao: cons.dataSessao,
       assistente: cons.assistente,
       auxiliar: cons.auxiliar,
       qtdPessoas: cons.qtdPessoas,
