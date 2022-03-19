@@ -40,7 +40,6 @@ import { SwitchInput } from '../../components/Forms/SwitchInput';
 import { useRouter } from 'next/router';
 import { useQueryClient, useMutation } from 'react-query';
 import { api } from '../../services/api';
-import { connectToDatabase } from '../../services/mongodb';
 
 type CreateConsumoFormData = {
   cod: number;
@@ -99,7 +98,6 @@ export default function CreateConsumo() {
     values
   ) => {
     const formatterValues = {
-      
       cod: Number(values.cod),
       tipoSessao: values.tipoSessao,
       dirigente: values.dirigente,

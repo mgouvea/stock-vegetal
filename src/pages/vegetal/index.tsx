@@ -79,7 +79,7 @@ export default function EntradaVegetal() {
             ) : error ? (
               <Flex justify="center">
                 <Text>Falha ao exibir dados </Text>
-                {console.log(error)}
+                {/* {console.log(error)} */}
               </Flex>
             ) : (
               <TableVegetal data={data} />
@@ -89,7 +89,7 @@ export default function EntradaVegetal() {
           ) : error ? (
             <Flex justify="center">
               <Text>Falha ao exibir dados </Text>
-              {console.log(error)}
+              {/* {console.log(error)} */}
             </Flex>
           ) : (
             <Box>

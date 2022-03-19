@@ -24,6 +24,7 @@ export function TableVegetal({ data }) {
             </Th>
             <Th color="gray.500">PREPARO</Th>
             <Th color="gray.500">QTD</Th>
+            <Th color="gray.500">QTD ATUAL</Th>
             <Th color="gray.500">OBS</Th>
             <Th color="gray.500">DATA</Th>
           </Tr>
@@ -42,8 +43,17 @@ export function TableVegetal({ data }) {
                 </Box>
               </Td>
               <Td>
-                <Badge colorScheme={'green'} variant="solid" fontSize="md">
+                <Badge colorScheme={'gray'} variant="solid" fontSize="md">
                   {veg.qtd} L
+                </Badge>
+              </Td>
+              <Td>
+                <Badge
+                  colorScheme={veg.qtdAtual < 21 ? 'red' : 'green'}
+                  variant="solid"
+                  fontSize="md"
+                >
+                  {veg.qtdAtual} L
                 </Badge>
               </Td>
               <Td>{veg.obs}</Td>

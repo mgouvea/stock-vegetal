@@ -3,7 +3,6 @@ import { Badge, Box, Text, theme, useBreakpointValue } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { ApexOptions } from 'apexcharts';
 import { useVegetal } from '../../services/hooks/useVegetal';
-import { useConsumo } from '../../services/hooks/useConsumo';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
@@ -11,6 +10,7 @@ const Chart = dynamic(() => import('react-apexcharts'), {
 
 export function TotalChartPie() {
   const { data } = useVegetal();
+  // console.log(data);
 
   // OPTIONS GRAPH PIE
   // __________________________________

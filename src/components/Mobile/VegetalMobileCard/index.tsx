@@ -62,7 +62,7 @@ export function VegetalMobileCard({ data }) {
                 <Stack spacing={0} align={'center'}>
                   <Text fontWeight={600}>
                     <Badge
-                      colorScheme={'green'}
+                      colorScheme={'gray'}
                       variant="solid"
                       fontSize="md"
                       borderRadius="md"
@@ -70,10 +70,25 @@ export function VegetalMobileCard({ data }) {
                       {veg.qtd}
                     </Badge>
                   </Text>
-                  <Text fontSize={'sm'} color={'gray.500'}>
+                  <Text fontSize={'md'} color={'gray.500'}>
                     Litros
                   </Text>
                 </Stack>
+                <Stack spacing={0} align={'center'}>
+                  <Badge
+                    colorScheme={veg.qtdAtual < 21 ? 'red' : 'green'}
+                    variant="solid"
+                    fontSize="md"
+                    borderRadius="md"
+                  >
+                    {veg.qtdAtual}
+                  </Badge>
+                  <Text color="gray.500" fontSize="md">
+                    Atual
+                  </Text>
+                </Stack>
+              </Stack>
+              <Stack spacing={0} align={'center'} mt="2">
                 <Stack spacing={0} align={'center'}>
                   <Text fontWeight={600} color="gray.500">
                     {veg.dataPreparo}
