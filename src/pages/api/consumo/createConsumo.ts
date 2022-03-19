@@ -7,12 +7,29 @@ const handlerCreateConsumo = async (
 ) => {
   try {
     const { method } = req;
+    const { db } = await connectToDatabase();
+    const dataConsumo = req.body;
+    console.log(dataConsumo);
+
+    //db.collection('vegetal').createIndex({ cod: 'text' });
+
+    // const dataCod = await db
+    //   .collection('vegetal')
+    //   .find({ $text: { $search: `101` } }, { _id: 1 });
+    // console.log('index', dataCod);
 
     switch (method) {
       case 'POST':
         // acesso ao mongoDB
-        const { db } = await connectToDatabase();
-        const data = await db.collection('consumo').insertOne(req.body);
+        const data = await db.collection('consumo').insertOne(dataConsumo);
+
+        const updateVegetalCod = await db.collection('vegetal').findOne({ cod: dataConsumo.cod });
+        await db
+          .collection('vegetal')
+          .updateOne(
+            { _id: updateVegetalCod._id },
+            { $inc: { qtdAtual: -dataConsumo.consumo } }
+          );
 
         res.status(200).json(data.ops[0]);
         break;

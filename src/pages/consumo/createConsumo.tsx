@@ -40,6 +40,7 @@ import { SwitchInput } from '../../components/Forms/SwitchInput';
 import { useRouter } from 'next/router';
 import { useQueryClient, useMutation } from 'react-query';
 import { api } from '../../services/api';
+import { connectToDatabase } from '../../services/mongodb';
 
 type CreateConsumoFormData = {
   cod: number;
@@ -54,6 +55,8 @@ type CreateConsumoFormData = {
   qtdPessoas?: number;
   repeticoes?: number;
 };
+
+// type UpdateConsumoFormData = Pick<CreateConsumoFormData, 'cod' | 'consumo'>;
 
 const createConsumoFormSchema = yup.object().shape({
   cod: yup.string().required('ID obrigatório'),
@@ -96,6 +99,7 @@ export default function CreateConsumo() {
     values
   ) => {
     const formatterValues = {
+      
       cod: Number(values.cod),
       tipoSessao: values.tipoSessao,
       dirigente: values.dirigente,
@@ -108,8 +112,15 @@ export default function CreateConsumo() {
       qtdPessoas: Number(values.qtdPessoas),
       repeticoes: Number(values.repeticoes),
     };
+
+    // const updateConsumoValues = {
+    //   cod: Number(values.cod),
+    //   consumo: Number(values.consumo),
+    // };
+
     try {
       await createConsumo.mutateAsync(formatterValues);
+
       routes.push('/consumo');
     } catch (err) {
       console.log('error', err.message);

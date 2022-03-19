@@ -158,6 +158,7 @@ export default function CreateVegetal() {
                 name="qtd"
                 type="number"
                 step={0.5}
+                min={0}
                 label="Quantidade Preparada"
                 {...register('qtd')}
                 error={errors.qtd}
