@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { RiAddLine } from 'react-icons/ri';
 import { Header } from '../../components/Header';
 import { SideBar } from '../../components/Sidebar';
-import { ConsumoMobileCard } from '../../components/ConsumoMobileCard';
+import { ConsumoMobileCard } from '../../components/Mobile/ConsumoMobileCard';
 import { TableConsumo } from '../../components/Tables/TableConsumo';
 import { SkeletonTables } from '../../components/SkeletonTables';
 import { RiRefreshLine } from 'react-icons/ri';

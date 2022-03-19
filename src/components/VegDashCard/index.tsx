@@ -9,13 +9,14 @@ const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
 
-export function TotalChartPie() {
+export function VegDashCard() {
   const { data } = useVegetal();
+  const dataConsumo = useConsumo();
 
   // OPTIONS GRAPH PIE
   // __________________________________
 
-  const qtdAtual = data?.map((item) => item.qtdAtual);
+  const qtdAtual = data?.map((item) => item?.qtdAtual);
   const seriesPie = qtdAtual;
 
   const sum = (accumulator, count) => accumulator + count;
@@ -53,7 +54,7 @@ export function TotalChartPie() {
       enabled: false,
     },
     // labels: ['ID: 29', 'ID: 39', 'ID: 45', 'ID: 54', 'ID: 93'],
-    labels: data?.map((item) => `ID: ${item.cod}`),
+    labels: data?.map((item) => `ID: ${item?.cod}`),
   };
 
   //______________________________________

@@ -1,4 +1,11 @@
-import { Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  SimpleGrid,
+  Spinner,
+} from '@chakra-ui/react';
 import { LineBarConsumo } from '../components/Graphs/LineBarConsumo';
 
 import { Header } from '../components/Header';
@@ -6,6 +13,7 @@ import { SideBar } from '../components/Sidebar';
 import { useEffect, useState } from 'react';
 import { TotalChartPie } from '../components/Graphs/TotalChartPie';
 import { useVegetal } from '../services/hooks/useVegetal';
+import { VegDashCard } from '../components/VegDashCard';
 
 export default function Dashboard() {
   const { data } = useVegetal();
@@ -25,6 +33,7 @@ export default function Dashboard() {
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <SideBar />
+
         <SimpleGrid
           flex="1"
           gap="4"
@@ -37,8 +46,12 @@ export default function Dashboard() {
             </Flex>
           ) : (
             <>
-              <TotalChartPie />
-              <LineBarConsumo />
+              <Box>
+                <TotalChartPie />
+              </Box>
+              <Box>
+                <LineBarConsumo />
+              </Box>
             </>
           )}
         </SimpleGrid>

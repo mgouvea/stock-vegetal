@@ -16,7 +16,7 @@ import { Header } from '../../components/Header';
 import { SideBar } from '../../components/Sidebar';
 import { SkeletonTables } from '../../components/SkeletonTables';
 import { TableVegetal } from '../../components/Tables/TableVegetal';
-import { VegetalMobileCard } from '../../components/VegetalMobileCard';
+import { VegetalMobileCard } from '../../components/Mobile/VegetalMobileCard';
 
 import { RiRefreshLine } from 'react-icons/ri';
 import { useVegetal } from '../../services/hooks/useVegetal';
