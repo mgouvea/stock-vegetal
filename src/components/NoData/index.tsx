@@ -8,7 +8,7 @@ import {
   useBreakpointValue,
   // Image,
 } from '@chakra-ui/react';
-import Image from 'next/image';
+import { FcDeleteDatabase } from 'react-icons/fc';
 import Link from 'next/link';
 
 const imgLink =
@@ -33,9 +33,11 @@ export default function NoData() {
         justify={'center'}
       >
         {isWideVersion ? (
-          <Image src="/db.png" width={160} height={160} alt="No database" />
+          <FcDeleteDatabase size={95} />
         ) : (
-          <Image src="/db.png" width={120} height={120} alt="No database" />
+          // <Image src="/db.png" width={160} height={160} alt="No database" />
+          <FcDeleteDatabase size={80} />
+          // <Image src="/db.png" width={120} height={120} alt="No database" />
         )}
         <Stack align={'center'} spacing={2}>
           <Heading
