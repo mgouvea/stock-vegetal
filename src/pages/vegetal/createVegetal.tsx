@@ -180,7 +180,7 @@ export default function CreateVegetal() {
               <Input
                 name="qtd"
                 type="number"
-                step={0.5}
+                step={0.1}
                 min={0}
                 label="Quantidade Preparada"
                 {...register('qtd')}

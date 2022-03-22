@@ -192,7 +192,7 @@ export default function CreateConsumo() {
                 name="consumo"
                 type="number"
                 label="Quantidade consumida"
-                step={0.5}
+                step={0.1}
                 min={0}
                 {...register('consumo')}
                 error={errors.consumo}
