@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { api } from '../api';
 
 type Vegetal = {
-  id: string;
+  id: object;
   cod: number;
   tipoMariri: string;
   tipoChacrona: string;
@@ -22,7 +22,7 @@ export async function getVegetal(): Promise<Vegetal[]> {
   // formatar dados e carregar só uma vez
   const vegetal = data?.map((v) => {
     return {
-      id: v.id,
+      id: v._id,
       cod: v.cod,
       tipoMariri: v.tipoMariri,
       tipoChacrona: v.tipoChacrona,

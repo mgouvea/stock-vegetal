@@ -20,10 +20,11 @@ import { VegetalMobileCard } from '../../components/Mobile/VegetalMobileCard';
 
 import { RiRefreshLine } from 'react-icons/ri';
 import { useVegetal } from '../../services/hooks/useVegetal';
+import NotFound from '../../components/NotFound';
 
 export default function EntradaVegetal() {
   const { data, isLoading, isFetching, error, refetch } = useVegetal();
-
+  // console.log(data);
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -59,6 +60,7 @@ export default function EntradaVegetal() {
                     size="sm"
                     fontSize="sm"
                     colorScheme="teal"
+                    // bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
                     leftIcon={
                       <Icon
                         as={RiAddLine}
@@ -77,12 +79,10 @@ export default function EntradaVegetal() {
             isLoading ? (
               <SkeletonTables />
             ) : error ? (
-              <Flex justify="center">
-                <Text>Falha ao exibir dados </Text>
-                {/* {console.log(error)} */}
-              </Flex>
+              <NotFound />
             ) : (
-              <TableVegetal data={data} />
+              // <TableVegetal data={data} />
+              <TableVegetal />
             )
           ) : isLoading ? (
             <SkeletonTables />

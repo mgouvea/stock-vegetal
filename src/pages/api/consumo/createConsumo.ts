@@ -9,14 +9,6 @@ const handlerCreateConsumo = async (
     const { method } = req;
     const { db } = await connectToDatabase();
     const dataConsumo = req.body;
-    console.log(dataConsumo);
-
-    //db.collection('vegetal').createIndex({ cod: 'text' });
-
-    // const dataCod = await db
-    //   .collection('vegetal')
-    //   .find({ $text: { $search: `101` } }, { _id: 1 });
-    // console.log('index', dataCod);
 
     switch (method) {
       case 'POST':

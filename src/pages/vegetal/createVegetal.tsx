@@ -7,7 +7,9 @@ import {
   HStack,
   SimpleGrid,
   Text,
+  useBoolean,
   useBreakpointValue,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { Input } from '../../components/Forms/Input';
@@ -26,6 +28,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from 'react-query';
 import { api } from '../../services/api';
 import { useRouter } from 'next/router';
+import { useVegetal } from '../../services/hooks/useVegetal';
+import { SwitchInput } from '../../components/Forms/SwitchInput';
 
 // import { useRouter } from 'next/router';
 
@@ -36,6 +40,7 @@ type CreateVegetalFormData = {
   qtd: number;
   qtdAtual: number;
   dataPreparo: string;
+  dataEntrada: string;
   npreparo: string;
   mpreparo: string;
   origemMariri?: string;
@@ -52,6 +57,10 @@ const createVegetalFormSchema = yup.object().shape({
 });
 
 export default function CreateVegetal() {
+  const { data } = useVegetal();
+  const toast = useToast();
+  const [flag, setFlag] = useBoolean();
+
   const createVegetal = useMutation(async (vegetal: CreateVegetalFormData) => {
     const response = await api.post('/vegetal/createVegetal', {
       ...vegetal,
@@ -76,6 +85,7 @@ export default function CreateVegetal() {
       tipoChacrona: values.tipoChacrona,
       qtd: Number(values.qtd),
       dataPreparo: values.dataPreparo,
+      dataEntrada: values.dataEntrada,
       npreparo: values.npreparo,
       mpreparo: values.mpreparo,
       origemMariri: values.origemMariri,
@@ -85,8 +95,21 @@ export default function CreateVegetal() {
     };
 
     try {
-      await createVegetal.mutateAsync(formatterValues);
-      routes.push('/vegetal');
+      if (data.map((i) => i.cod).includes(formatterValues.cod)) {
+        toast({
+          title: `ID ${formatterValues.cod} já cadastrado!`,
+          status: 'error',
+          isClosable: true,
+        });
+      } else {
+        await createVegetal.mutateAsync(formatterValues);
+        toast({
+          title: `Vegetal ${formatterValues.cod} cadastrado com sucesso!`,
+          status: 'success',
+          isClosable: true,
+        });
+        routes.push('/vegetal');
+      }
     } catch (err) {
       console.log('error', err.message);
     }
@@ -204,6 +227,21 @@ export default function CreateVegetal() {
                 {...register('obs')}
               />
             </SimpleGrid>
+            <SwitchInput
+              name="dataEntradaTrue"
+              label="Data de entrada ?"
+              onChange={setFlag.toggle}
+              mb="4"
+            />
+            {flag && (
+              <Input
+                w="48%"
+                name="dataEntrada"
+                type="date"
+                label="Data de Entrada"
+                {...register('dataEntrada')}
+              />
+            )}
           </VStack>
 
           <Flex mt="8" justify="flex-end">

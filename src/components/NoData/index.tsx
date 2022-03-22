@@ -6,18 +6,19 @@ import {
   Button,
   useColorModeValue,
   useBreakpointValue,
-  Image,
+  // Image,
 } from '@chakra-ui/react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const imgLink =
   'https://cdn-icons.flaticon.com/png/512/4380/premium/4380752.png?token=exp=1647722385~hmac=2c8bba796e6af188289635468a38cf8e';
 
 export default function NoData() {
-  // const isWideVersion = useBreakpointValue({
-  //   base: false,
-  //   lg: true,
-  // });
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    lg: true,
+  });
 
   return (
     <Flex mx={'auto'} mt="3">
@@ -31,8 +32,11 @@ export default function NoData() {
         align={'center'}
         justify={'center'}
       >
-        {/* <Icon as={DataBaseIcon} w={24} h={24} /> */}
-        <Image src={imgLink} w={24} h={24} />
+        {isWideVersion ? (
+          <Image src="/db.png" width={160} height={160} alt="No database" />
+        ) : (
+          <Image src="/db.png" width={120} height={120} alt="No database" />
+        )}
         <Stack align={'center'} spacing={2}>
           <Heading
             textTransform={'uppercase'}
@@ -47,8 +51,9 @@ export default function NoData() {
           </Text>
         </Stack>
         <Stack spacing={4} direction={{ base: 'column', md: 'row' }} w={'full'}>
-          <Link as="a" href="/vegetal" passHref>
+          <Link href="/vegetal" passHref>
             <Button
+              alignSelf="center"
               bg={'blue.400'}
               rounded={'full'}
               color={'white'}

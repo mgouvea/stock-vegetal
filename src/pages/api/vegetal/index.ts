@@ -4,17 +4,22 @@ import { connectToDatabase } from '../../../services/mongodb';
 const handlerVegetal = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { method } = req;
+    const dataDelete = req.body;
+    const { db } = await connectToDatabase();
 
     switch (method) {
       case 'GET':
         // acesso ao mongoDB
-        const { db } = await connectToDatabase();
         const data = await db.collection('vegetal').find().toArray();
 
         res.status(200).json(data);
         break;
+      case 'DELETE':
+        await db.collection('vegetal').deleteOne(dataDelete);
+
+        break;
       default:
-        res.setHeader('Allow', ['GET', 'PUT']);
+        res.setHeader('Allow', ['GET', 'DELETE']);
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (err) {
