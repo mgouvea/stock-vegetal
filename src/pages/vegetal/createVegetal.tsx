@@ -39,8 +39,8 @@ type CreateVegetalFormData = {
   tipoChacrona?: string;
   qtd: number;
   qtdAtual: number;
-  dataPreparo: string;
-  dataEntrada: string;
+  dataPreparo: Date;
+  dataEntrada: Date;
   npreparo: string;
   mpreparo: string;
   origemMariri?: string;
@@ -84,8 +84,8 @@ export default function CreateVegetal() {
       tipoMariri: values.tipoMariri,
       tipoChacrona: values.tipoChacrona,
       qtd: Number(values.qtd),
-      dataPreparo: values.dataPreparo,
-      dataEntrada: values.dataEntrada,
+      dataPreparo: new Date(values.dataPreparo),
+      dataEntrada: new Date(values.dataEntrada),
       npreparo: values.npreparo,
       mpreparo: values.mpreparo,
       origemMariri: values.origemMariri,

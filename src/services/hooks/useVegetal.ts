@@ -1,6 +1,8 @@
 import { useQuery } from 'react-query';
 import { api } from '../api';
 
+import moment from 'moment';
+
 type Vegetal = {
   id: object;
   cod: number;
@@ -29,8 +31,9 @@ export async function getVegetal(): Promise<Vegetal[]> {
       tipoChacrona: v.tipoChacrona,
       qtd: v.qtd,
       qtdAtual: v.qtdAtual,
-      dataPreparo: new Date(v.dataPreparo).toLocaleDateString('pt-BR'),
-      dataEntrada: new Date(v.dataEntrada).toLocaleDateString('pt-BR'),
+      // dataPreparo: new Date(v.dataPreparo).toLocaleDateString('pt-BR'),
+      dataPreparo: moment(v.dataPreparo).add(1, 'day').format('DD/MM/YYYY'),
+      dataEntrada: moment(v.dataEntrada).add(1, 'day').format('DD/MM/YYYY'),
       npreparo: v.npreparo,
       mpreparo: v.mpreparo,
       origemMariri: v.origemMariri,
