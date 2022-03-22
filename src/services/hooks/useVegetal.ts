@@ -9,6 +9,7 @@ type Vegetal = {
   qtd: number;
   qtdAtual: number;
   dataPreparo: string;
+  dataEntrada: string;
   npreparo: string;
   mpreparo: string;
   origemMariri: string;
@@ -29,6 +30,7 @@ export async function getVegetal(): Promise<Vegetal[]> {
       qtd: v.qtd,
       qtdAtual: v.qtdAtual,
       dataPreparo: new Date(v.dataPreparo).toLocaleDateString('pt-BR'),
+      dataEntrada: new Date(v.dataEntrada).toLocaleDateString('pt-BR'),
       npreparo: v.npreparo,
       mpreparo: v.mpreparo,
       origemMariri: v.origemMariri,
