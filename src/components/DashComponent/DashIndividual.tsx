@@ -27,7 +27,7 @@ export function DashIndividial() {
         ) : (
           <>
             {data.map((i) => (
-              <Box>
+              <Box key={i.cod}>
                 <IndividualGraphBar
                   dataAtual={i.qtdAtual}
                   dataEntrada={i.qtd}
