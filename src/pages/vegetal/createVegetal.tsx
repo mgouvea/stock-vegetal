@@ -50,9 +50,9 @@ type CreateVegetalFormData = {
 
 const createVegetalFormSchema = yup.object().shape({
   cod: yup.string().required('ID obrigatório'),
-  tipoMariri: yup.string().required('Tipo Mariri obrigatório'),
+  // tipoMariri: yup.string().required('Tipo Mariri obrigatório'),
   qtd: yup.string().required('Quantidade obrigatória'),
-  dataPreparo: yup.string().required('Data obrigatória'),
+  // dataPreparo: yup.string().required('Data obrigatória'),
   // grau: yup.string().required('Grau obrigatório'),
 });
 
