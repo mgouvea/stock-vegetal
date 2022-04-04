@@ -33,7 +33,7 @@ export function TotalChartPie() {
       foreColor: theme.colors.gray[300],
     },
     dataLabels: {
-      enabled: true,
+      enabled: false,
     },
     labels: data?.map((item) => `ID: ${item.cod}`),
   };

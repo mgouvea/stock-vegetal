@@ -21,6 +21,7 @@ import { VegetalMobileCard } from '../../components/Mobile/VegetalMobileCard';
 import { RiRefreshLine } from 'react-icons/ri';
 import { useVegetal } from '../../services/hooks/useVegetal';
 import NotFound from '../../components/NotFound';
+import { Pagination } from '../../components/Pagination';
 
 export default function EntradaVegetal() {
   const { data, isLoading, isFetching, error, refetch } = useVegetal();

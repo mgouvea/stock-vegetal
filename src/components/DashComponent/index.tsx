@@ -22,7 +22,7 @@ export function DashComponent() {
   }, [data]);
 
   return (
-    <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
+    <Flex w="100%" my="6" maxWidth={1480} mx="auto" px={[0, 6]}>
       {data?.length === 0 ? (
         <NoData />
       ) : (
