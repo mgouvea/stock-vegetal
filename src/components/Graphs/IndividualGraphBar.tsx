@@ -102,7 +102,7 @@ export function IndividualGraphBar({
                 color="gray.100"
                 fontSize="xl"
               >
-                {dataTipoVegetal}
+                {dataTipoVegetal ? dataTipoVegetal : 'Não Informado'}
               </Text>
             </Box>
             <Box>
@@ -132,9 +132,10 @@ export function IndividualGraphBar({
           <Chart options={options} series={series} type="bar" height={120} />
         </>
       ) : (
-        <Flex h="9.75rem">
+        <>
+          <Box h="1.3rem"></Box>
           <Chart options={options} series={series} type="bar" height={120} />
-        </Flex>
+        </>
       )}
     </Box>
   );

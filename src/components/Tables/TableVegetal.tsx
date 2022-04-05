@@ -41,6 +41,9 @@ export function TableVegetal({}) {
   const { data } = useVegetal();
   const toast = useToast();
 
+  // let orderCod = data?.map((i) => i.cod);
+  let newOrderCod = data?.sort((a, b) => a.cod - b.cod);
+
   const queryClient = useQueryClient();
   // const deleteVegetal = useMutation(
   //   async (vegetalToDelete: DeleteVegetalRow) => {
@@ -91,7 +94,7 @@ export function TableVegetal({}) {
           </Tr>
         </Thead>
         <Tbody>
-          {data?.map((veg) => (
+          {newOrderCod?.map((veg) => (
             <Tr key={veg.cod}>
               <Td fontWeight="bold">{veg.cod}</Td>
               <Td color={textFieldColor}>{veg.tipoMariri}</Td>
