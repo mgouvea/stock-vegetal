@@ -61,7 +61,9 @@ export function DashIndividial() {
     if (data === undefined) {
       setIsloading(true);
     } else {
-      setIsloading(false);
+      setTimeout(() => {
+        setIsloading(false);
+      }, 2000);
       setFilters({
         id: newOrderCod,
         dirigente: newMpreparo,
@@ -140,83 +142,91 @@ export function DashIndividial() {
           </Box>
         </Flex>
       </Box>
-      <SimpleGrid columns={[2, 3]} spacing="2.5rem">
-        {data?.length === 0 ? (
-          <NoData />
-        ) : isLoading ? (
-          <Flex justify="center" mt="5">
-            <Spinner />
-          </Flex>
-        ) : (
-          <>
-            {idFilter === 0 && mPreparoFilter === ''
-              ? data.map((i) => (
-                  <Box key={i.cod}>
-                    {isWideVersion ? (
-                      <IndividualGraphBar
-                        dataAtual={i.qtdAtual}
-                        dataEntrada={i.qtd}
-                        dataId={i.cod}
-                        dataTipoVegetal={i.tipoMariri}
-                        dataMestreDirigente={i.mpreparo}
-                      />
-                    ) : (
-                      <IndividualMobileCard
-                        dataAtual={i.qtdAtual}
-                        dataEntrada={i.qtd}
-                        dataId={i.cod}
-                        dataTipoVegetal={i.tipoMariri}
-                        dataMestreDirigente={i.mpreparo}
-                      />
-                    )}
-                  </Box>
-                ))
-              : idFilter !== 0 && mPreparoFilter === ''
-              ? dataFilterId.map((i) => (
-                  <Box key={i.cod}>
-                    {isWideVersion ? (
-                      <IndividualGraphBar
-                        dataAtual={i.qtdAtual}
-                        dataEntrada={i.qtd}
-                        dataId={i.cod}
-                        dataTipoVegetal={i.tipoMariri}
-                        dataMestreDirigente={i.mpreparo}
-                      />
-                    ) : (
-                      <IndividualMobileCard
-                        dataAtual={i.qtdAtual}
-                        dataEntrada={i.qtd}
-                        dataId={i.cod}
-                        dataTipoVegetal={i.tipoMariri}
-                        dataMestreDirigente={i.mpreparo}
-                      />
-                    )}
-                  </Box>
-                ))
-              : dataFilterMPreparo.map((i) => (
-                  <Box key={i.cod}>
-                    {isWideVersion ? (
-                      <IndividualGraphBar
-                        dataAtual={i.qtdAtual}
-                        dataEntrada={i.qtd}
-                        dataId={i.cod}
-                        dataTipoVegetal={i.tipoMariri}
-                        dataMestreDirigente={i.mpreparo}
-                      />
-                    ) : (
-                      <IndividualMobileCard
-                        dataAtual={i.qtdAtual}
-                        dataEntrada={i.qtd}
-                        dataId={i.cod}
-                        dataTipoVegetal={i.tipoMariri}
-                        dataMestreDirigente={i.mpreparo}
-                      />
-                    )}
-                  </Box>
-                ))}
-          </>
-        )}
-      </SimpleGrid>
+      {data?.length === 0 ? (
+        <NoData />
+      ) : (
+        <SimpleGrid columns={[2, 3]} spacing="2.5rem">
+          {isLoading ? (
+            <Flex justify="center" mt="5" w={['30rem', '73rem']}>
+              <Spinner />
+            </Flex>
+          ) : (
+            <>
+              {idFilter === 0 && mPreparoFilter === ''
+                ? data.map((i) => (
+                    <Box key={i.cod}>
+                      {isWideVersion ? (
+                        <IndividualGraphBar
+                          dataAtual={i.qtdAtual}
+                          dataEntrada={i.qtd}
+                          dataId={i.cod}
+                          dataTipoVegetal={i.tipoMariri}
+                          dataMestreDirigente={i.mpreparo}
+                          dataObs={i.obs}
+                        />
+                      ) : (
+                        <IndividualMobileCard
+                          dataAtual={i.qtdAtual}
+                          dataEntrada={i.qtd}
+                          dataId={i.cod}
+                          dataTipoVegetal={i.tipoMariri}
+                          dataMestreDirigente={i.mpreparo}
+                          dataObs={i.obs}
+                        />
+                      )}
+                    </Box>
+                  ))
+                : idFilter !== 0 && mPreparoFilter === ''
+                ? dataFilterId.map((i) => (
+                    <Box key={i.cod}>
+                      {isWideVersion ? (
+                        <IndividualGraphBar
+                          dataAtual={i.qtdAtual}
+                          dataEntrada={i.qtd}
+                          dataId={i.cod}
+                          dataTipoVegetal={i.tipoMariri}
+                          dataMestreDirigente={i.mpreparo}
+                          dataObs={i.obs}
+                        />
+                      ) : (
+                        <IndividualMobileCard
+                          dataAtual={i.qtdAtual}
+                          dataEntrada={i.qtd}
+                          dataId={i.cod}
+                          dataTipoVegetal={i.tipoMariri}
+                          dataMestreDirigente={i.mpreparo}
+                          dataObs={i.obs}
+                        />
+                      )}
+                    </Box>
+                  ))
+                : dataFilterMPreparo.map((i) => (
+                    <Box key={i.cod}>
+                      {isWideVersion ? (
+                        <IndividualGraphBar
+                          dataAtual={i.qtdAtual}
+                          dataEntrada={i.qtd}
+                          dataId={i.cod}
+                          dataTipoVegetal={i.tipoMariri}
+                          dataMestreDirigente={i.mpreparo}
+                          dataObs={i.obs}
+                        />
+                      ) : (
+                        <IndividualMobileCard
+                          dataAtual={i.qtdAtual}
+                          dataEntrada={i.qtd}
+                          dataId={i.cod}
+                          dataTipoVegetal={i.tipoMariri}
+                          dataMestreDirigente={i.mpreparo}
+                          dataObs={i.obs}
+                        />
+                      )}
+                    </Box>
+                  ))}
+            </>
+          )}
+        </SimpleGrid>
+      )}
     </Box>
   );
 }

@@ -1,8 +1,6 @@
-import { Badge, Box, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Badge, Box, Flex, Stack, Text } from '@chakra-ui/react';
 import { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
-import { useVegetal } from '../../services/hooks/useVegetal';
-import { theme } from '../../styles/theme';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
@@ -14,6 +12,7 @@ interface IndividualGraphBarProps {
   dataId: number;
   dataTipoVegetal: string;
   dataMestreDirigente: string;
+  dataObs: string;
 }
 
 export function IndividualGraphBar({
@@ -22,6 +21,7 @@ export function IndividualGraphBar({
   dataId,
   dataTipoVegetal,
   dataMestreDirigente,
+  dataObs,
 }: IndividualGraphBarProps) {
   const series = [
     {
@@ -122,8 +122,20 @@ export function IndividualGraphBar({
           </Text>
         </Badge>
       </Flex>
-
-      <Chart options={options} series={series} type="bar" height={120} />
+      {dataObs ? (
+        <>
+          <Flex justify="right" pr="2.1rem">
+            <Text fontSize="sm" color="gray.400" fontWeight="bold">
+              {dataObs}
+            </Text>
+          </Flex>
+          <Chart options={options} series={series} type="bar" height={120} />
+        </>
+      ) : (
+        <Flex h="9.75rem">
+          <Chart options={options} series={series} type="bar" height={120} />
+        </Flex>
+      )}
     </Box>
   );
 }

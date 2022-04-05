@@ -12,6 +12,7 @@ interface IndividualMobileCardProps {
   dataId: number;
   dataTipoVegetal: string;
   dataMestreDirigente: string;
+  dataObs: string;
 }
 
 export function IndividualMobileCard({
@@ -20,6 +21,7 @@ export function IndividualMobileCard({
   dataId,
   dataTipoVegetal,
   dataMestreDirigente,
+  dataObs,
 }: IndividualMobileCardProps) {
   const series = [
     {
@@ -132,8 +134,26 @@ export function IndividualMobileCard({
           </Text>
         </Badge>
       </Flex>
-
-      <Chart options={options} series={series} type="bar" height={120} />
+      {dataObs ? (
+        <>
+          <Flex justify="center" mt="0.3rem" px="0.5rem">
+            <Text
+              fontSize="xs"
+              color="gray.400"
+              fontWeight="bold"
+              overflow-wrap="break-word"
+              textAlign="center"
+            >
+              {dataObs}
+            </Text>
+          </Flex>
+          <Chart options={options} series={series} type="bar" height={120} />
+        </>
+      ) : (
+        <Flex h="9.83rem">
+          <Chart options={options} series={series} type="bar" height={120} />
+        </Flex>
+      )}
     </Box>
   );
 }

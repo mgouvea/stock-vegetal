@@ -16,23 +16,10 @@ import { SideBar } from '../components/Sidebar';
 import { useEffect, useState } from 'react';
 import { TotalChartPie } from '../components/Graphs/TotalChartPie';
 import { useVegetal } from '../services/hooks/useVegetal';
-import NoData from '../components/NoData';
 import { DashComponent } from '../components/DashComponent';
 import { DashIndividial } from '../components/DashComponent/DashIndividual';
-// import { VegDashCard } from '../components/VegDashCard';
 
 export default function Dashboard() {
-  const { data } = useVegetal();
-  const [isLoading, setIsloading] = useState(true);
-
-  useEffect(() => {
-    if (data === undefined) {
-      setIsloading(true);
-    } else {
-      setIsloading(false);
-    }
-  }, [data]);
-
   return (
     <Flex direction="column" h="100vh">
       <Header />

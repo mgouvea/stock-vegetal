@@ -1,13 +1,10 @@
 import { Box, Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
 import { LineBarConsumo } from '../Graphs/LineBarConsumo';
 
-import { Header } from '../Header';
-import { SideBar } from '../Sidebar';
 import { useEffect, useState } from 'react';
 import { TotalChartPie } from '../Graphs/TotalChartPie';
 import { useVegetal } from '../../services/hooks/useVegetal';
 import NoData from '../../components/NoData';
-// import { VegDashCard } from '../components/VegDashCard';
 
 export function DashComponent() {
   const { data } = useVegetal();
