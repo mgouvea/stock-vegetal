@@ -74,7 +74,7 @@ export function TotalChartPie() {
           ml="3"
         >
           {' '}
-          {total} L{' '}
+          {total.toFixed(2)} L{' '}
         </Badge>
       </Text>
       {isWideVersion ? (
